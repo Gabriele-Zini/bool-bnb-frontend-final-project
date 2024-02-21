@@ -1,7 +1,28 @@
 <script>
+import axios from 'axios';
+import { store } from '../store'
 export default {
     data() {
-        return
+        return {
+            store,
+            apartments:[],
+        };
+    },
+
+    created() {
+        this.fetchData()
+
+    },
+    methods: {
+        fetchData() {
+            axios.get(`${this.store.baseUrl}/api/apartments`).then((resp) => {
+                console.log(resp.data.result.data)
+                this.apartments=resp.data.result.data;
+            })
+        },
+        getImage(imgPath) {
+            return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
+        }
     }
 }
 </script>
@@ -29,22 +50,17 @@ export default {
     <h2>Evidenza</h2>
     <div class="scrollable-cards-container">
   <div class="box-center">
-    <div v-for="index in 20" :key="index" class="card">
+    <div v-for="(apartment, index) in apartments" :key="apartment.id" class="card">
       <div :id="'carouselExampleIndicators_' + index" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" :data-bs-target="'#carouselExampleIndicators_' + index" :data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" :data-bs-target="'#carouselExampleIndicators_' + index" :data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" :data-bs-target="'#carouselExampleIndicators_' + index" :data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner">
+        <div class="carousel-inner" v-for="image in apartment.images">
           <div class="carousel-item active">
-            <img src="../assets/img/pexels-pixabay-271624.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="../assets/img/pexels-vecislavas-popa-1571453.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="../assets/img/img-bg.jpeg" class="d-block w-100" alt="...">
+            <img :src="!image.image_path ? getImage('no_Image_Available.jpg') : `${store.baseUrl}/storage/image_path/${apartment.slug}/${image.image_path}`"
+            class="card-img-top" :alt="apartment.title">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" :data-bs-target="'#carouselExampleIndicators_' + index" data-bs-slide="prev">
@@ -58,8 +74,10 @@ export default {
       </div>
       <div class="card pt-2">
         <div class="box-intern">
-            <h5>Portobello,Italy</h5>
-            <p>Privato</p>
+            <h5>{{ apartment.title }}</h5>
+            <p>{{ apartment.city }}</p>
+            <p>Number of room: {{ apartment.apartment_info.num_rooms }}</p>
+            <p>Number of beds: {{ apartment.apartment_info.num_beds }}</p>
             <p><strong>240$</strong> notte</p>
         </div>
         <div class="box-ixona">
