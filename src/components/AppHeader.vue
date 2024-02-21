@@ -72,12 +72,12 @@ export default {
         }
     }
 
-    .title {
-        // top: 20px;
-        // left: 50%;
-        // transform: translateX(-50%);
+    // .title {
+    //     // top: 20px;
+    //     // left: 50%;
+    //     // transform: translateX(-50%);
         
-    }
+    // }
 }
 h1 {
     font-family: 'Montserrat', sans-serif;
