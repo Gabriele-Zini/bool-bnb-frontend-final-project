@@ -1,4 +1,4 @@
-/* export default {
+export default {
     mounted() {
       // Inizializza il carosello per ogni card
       for (let index = 0; index < 20; index++) {
@@ -35,4 +35,4 @@
         carousel && new bootstrap.Carousel(carousel).prev();
       }
     });
-  }); */
+  });
