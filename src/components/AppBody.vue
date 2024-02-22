@@ -38,7 +38,7 @@ export default {
                             :alt="apartment.title">
                         <div v-else class="" >
                             <div class="">
-                                <img :src="`${store.baseUrl}/storage/image_path/${apartment.slug}/${apartment.images[0].image_path}`"
+                                <img :src="`${store.baseUrl}/storage/image_path/${apartment.images[0].image_path}`"
                                     class="" :alt="apartment.title">
                             </div>
                         </div>
