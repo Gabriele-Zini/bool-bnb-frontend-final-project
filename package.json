@@ -10,13 +10,14 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.5.1",
+    "@tomtom-international/web-sdk-maps": "^6.25.0",
+    "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
+    "@tomtom-international/web-sdk-services": "^6.25.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "gsap": "^3.12.5",
     "vue": "^3.4.15",
-    "@tomtom-international/web-sdk-maps": "^6.25.0",
-    "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
-    "@tomtom-international/web-sdk-services": "^6.25.0"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",
