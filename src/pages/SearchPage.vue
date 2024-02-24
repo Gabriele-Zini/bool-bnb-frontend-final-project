@@ -75,8 +75,6 @@ export default {
           this.city = e.data.result.address.municipality;
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
-
-          axios.get(`${this.store.baseUrl}/api/apartments`).then((resp) => {});
         });
         map.addControl(ttSearchBox, "top-left");
       };
@@ -85,6 +83,18 @@ export default {
       };
 
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    },
+    fetchData() {
+      axios
+        .get(`${this.store.baseUrl}/get-apartments`, {
+          params: {
+            latitude: this.latitude,
+            longitude: this.longitude,
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+        });
     },
   },
 };
@@ -95,7 +105,7 @@ export default {
     <div class="row justify-content-center">
       <!-- form to request data -->
       <div class="col-4 text-center border border-2 p-3">
-        <form action="" method="GET">
+        <form @submit.prevent="fetchData" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
           <div class="map form-control" id="map"></div>
 
