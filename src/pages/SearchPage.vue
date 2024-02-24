@@ -28,12 +28,6 @@ export default {
     mapInit() {
       const successCallback = (position) => {
         let center = { lat: position.coords.latitude, lng: position.coords.longitude };
-        console.log(
-          "Latitudine: ",
-          position.coords.latitude + " Longitudine: ",
-          position.coords.longitude
-        );
-        console.log(center);
 
         let map = tt.map({
           key: "HAMFczyVGd30ClZCfYGP9To9Y18u6eq7",
@@ -86,7 +80,7 @@ export default {
     },
     fetchData() {
       axios
-        .get(`${this.store.baseUrl}/get-apartments`, {
+        .get(`${this.store.baseUrl}/api/apartments`, {
           params: {
             latitude: this.latitude,
             longitude: this.longitude,
@@ -105,7 +99,7 @@ export default {
     <div class="row justify-content-center">
       <!-- form to request data -->
       <div class="col-4 text-center border border-2 p-3">
-        <form @submit.prevent="fetchData" action="" method="GET">
+        <form @submit.prevent="fetchData()" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
           <div class="map form-control" id="map"></div>
 
