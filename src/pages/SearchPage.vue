@@ -19,10 +19,13 @@ export default {
       longitude: "",
       city: "",
       country: "",
+      services: [],
+      selectedServices: [],
     };
   },
   mounted() {
     this.mapInit();
+    this.fetchServices();
   },
   methods: {
     mapInit() {
@@ -84,11 +87,24 @@ export default {
           params: {
             latitude: this.latitude,
             longitude: this.longitude,
+            services: this.selectedServices,
           },
         })
         .then((resp) => {
           console.log(resp);
         });
+    },
+    fetchServices() {
+      axios.get(`${this.store.baseUrl}/api/services`).then((resp) => {
+        this.services = resp.data.result;
+      });
+    },
+    updateSelectedServices(serviceName) {
+      if (this.selectedServices.includes(serviceName)) {
+        this.selectedServices = this.selectedServices.filter((id) => id !== serviceName);
+      } else {
+        this.selectedServices.push(serviceName);
+      }
     },
   },
 };
@@ -196,6 +212,30 @@ export default {
               name="longitude"
               v-model="longitude"
             />
+          </div>
+
+          <!-- services -->
+          <div
+            class="btn-group btn-group-sm my-3"
+            role="group"
+            aria-label="Basic checkbox toggle button group"
+          >
+            <div class="row g-2 justify-content-start align-items-center">
+              <div class="col" v-for="service in services">
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  :id="service.id"
+                  :name="service.name"
+                  value="1"
+                  autocomplete="off"
+                  @change="updateSelectedServices(service.name)"
+                />
+                <label class="btn btn-outline-primary ms_whitespace" :for="service.id">
+                  {{ service.name }}
+                </label>
+              </div>
+            </div>
           </div>
 
           <button type="submit" class="btn btn-success">Search</button>

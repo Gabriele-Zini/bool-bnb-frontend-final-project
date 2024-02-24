@@ -20,7 +20,7 @@ export default {
   methods: {
     fetchData() {
       axios.get(`${this.store.baseUrl}/api/apartments`).then((resp) => {
-        console.log(resp.data.result);
+        console.log(resp.data);
       });
     },
   },
