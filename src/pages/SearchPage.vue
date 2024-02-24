@@ -19,6 +19,10 @@ export default {
       longitude: "",
       city: "",
       country: "",
+      num_bed: "",
+      num_rooms: "",
+      num_bathrooms: "",
+      mt_square: "",
       services: [],
       selectedServices: [],
     };
@@ -88,6 +92,10 @@ export default {
             latitude: this.latitude,
             longitude: this.longitude,
             services: this.selectedServices,
+            num_beds: this.num_beds,
+            num_rooms: this.num_rooms,
+            num_bathrooms: this.num_bathrooms,
+            mt_square: this.mt_square,
           },
         })
         .then((resp) => {
@@ -211,6 +219,56 @@ export default {
               id="longitude"
               name="longitude"
               v-model="longitude"
+            />
+          </div>
+
+          <!-- APARTMENT INFOS -->
+
+          <!-- num bed -->
+          <div class="mb-3">
+            <label for="num_bed" class="form-label">Beds Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="num_bed"
+              name="num_bed"
+              v-model="num_bed"
+            />
+          </div>
+
+          <!-- num room -->
+          <div class="mb-3">
+            <label for="num_rooms" class="form-label">Rooms Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="num_rooms"
+              name="num_rooms"
+              v-model="num_rooms"
+            />
+          </div>
+
+          <!-- num bathrooms -->
+          <div class="mb-3">
+            <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="num_bathrooms"
+              name="num_bathrooms"
+              v-model="num_bathrooms"
+            />
+          </div>
+
+          <!-- mt_square -->
+          <div class="mb-3">
+            <label for="mt_square" class="form-label">Mt. square:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="mt_square"
+              name="mt_square"
+              v-model="mt_square"
             />
           </div>
 
