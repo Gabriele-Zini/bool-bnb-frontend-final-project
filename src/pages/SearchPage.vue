@@ -120,9 +120,6 @@ export default {
         .then((resp) => {
           this.filteredApartments = resp.data.result;
           console.log(resp);
-          /*  const searchBox = document.querySelector(".tt-search-box");
-          searchBox.querySelector("input").value = ""; // Cancella il valore dalla casella di ricerca
-          this.resetParameters(); */
         });
     },
     fetchServices() {
@@ -140,10 +137,12 @@ export default {
     toggleRadius() {
       this.showRadius = !this.showRadius;
     },
-    /*  resetParameters() {
+    resetPosition() {
+      const searchBox = document.querySelector(".tt-search-box");
+      searchBox.querySelector("input").value = "";
       (this.radius = 20), (this.latitude = "");
       this.longitude = "";
-    }, */
+    },
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
@@ -158,6 +157,7 @@ export default {
       <div class="col-4 text-center border border-2 p-3">
         <form @submit.prevent="fetchData()" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
+          <p class="cursor-pointer" @click="resetPosition()">reset position</p>
           <div class="map form-control" id="map"></div>
 
           <!-- radius -->
@@ -320,6 +320,8 @@ export default {
 <style lang="scss" scoped>
 .cursor-pointer {
   cursor: pointer;
+  color: blue;
+  text-decoration: underline;
 }
 
 .radius-div {
