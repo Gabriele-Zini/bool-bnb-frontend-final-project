@@ -13,6 +13,7 @@ export default {
       text: "",
       loading: false,
       store,
+      error: ""
     };
   },
   methods: {
@@ -26,12 +27,23 @@ export default {
         slug: this.slug,
       };
 
+      if(this.name === "" || this.lastname === "" || this.email === "" || this.text === ""){
+        return error = "Please check the fields"
+      }
+
+      this.name = "";
+      this.lastname = "";
+      this.email = "";
+      this.text = "";
+
       axios
         .post(`${this.store.baseUrl}/api/apartments/${this.slug}/messages`, data)
         .then((resp) => {
           console.log(resp);
         })
-        .catch((err) => {})
+        .catch((err) => {
+          console.log(err);
+        })
         .finally(() => {
           this.loading = false;
         });

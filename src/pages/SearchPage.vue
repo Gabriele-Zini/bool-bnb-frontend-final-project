@@ -343,7 +343,7 @@ export default {
     </div>
     <!-- /apartment--card -->
   </div>
-  <AppModal :slug="slug"/>
+  <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
 .cursor-pointer {
