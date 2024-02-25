@@ -15,6 +15,7 @@ export default {
       store,
       error: "",
       checkError: false,
+      messageSucces: false,
     };
   },
   methods: {
@@ -50,6 +51,9 @@ export default {
         .then((resp) => {
           this.loading = false;
           console.log(resp);
+          if (resp.data.success === true) {
+            this.messageSucces = true;
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -64,6 +68,7 @@ export default {
       this.email = "";
       this.text = "";
       this.checkError = false;
+      this.messageSucces = false;
     },
   },
 };
@@ -79,7 +84,13 @@ export default {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Contact the owner</h1>
+          <h1
+            class="modal-title fs-5"
+            id="exampleModalLabel"
+            v-if="messageSucces === false"
+          >
+            Contact the owner
+          </h1>
           <button
             type="button"
             class="btn-close"
@@ -89,7 +100,7 @@ export default {
           ></button>
         </div>
         <!-- Form that once sended activates the axios call -->
-        <form @submit.prevent="sendForm">
+        <form @submit.prevent="sendForm" v-if="messageSucces === false">
           <!-- Modal Body -->
           <div class="modal-body">
             <div class="mb-3">
@@ -149,11 +160,31 @@ export default {
             >
               Close
             </button>
-            <button :disabled="loading" type="submit" class="btn btn-success">
+            <button
+              :disabled="loading"
+              type="submit"
+              class="btn btn-success"
+              v-if="messageSucces === false"
+            >
               {{ loading ? "We're sending the message..." : "Send" }}
             </button>
           </div>
         </form>
+        <div v-if="messageSucces === true">
+          <div class="modal-body">
+            <p class="text-success text-center">message successfully send</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="resetAll()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
