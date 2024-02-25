@@ -13,14 +13,8 @@ export default {
       store,
       radius: 20,
       showRadius: false,
-      country_code: "",
-      postal_code: "",
-      street_name: "",
-      street_number: "",
       latitude: "",
       longitude: "",
-      city: "",
-      country: "",
       num_beds: "",
       num_rooms: "",
       num_bathrooms: "",
@@ -72,12 +66,6 @@ export default {
         ttSearchBox.on("tomtom.searchbox.resultselected", (e) => {
           map.flyTo({ center: e.data.result.position });
           console.log(e.data.result.position);
-          this.street_name = e.data.result.address.streetName;
-          this.street_number = e.data.result.address.streetNumber;
-          this.postal_code = e.data.result.address.postalCode;
-          this.country_code = e.data.result.address.countryCode;
-          this.country = e.data.result.address.country;
-          this.city = e.data.result.address.municipality;
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
         });
@@ -94,12 +82,6 @@ export default {
     },
     fetchData() {
       if (
-        !this.city &&
-        !this.street_number &&
-        !this.street_name &&
-        !this.postal_code &&
-        !this.country_code &&
-        !this.country &&
         !this.latitude &&
         !this.longitude &&
         !this.num_rooms &&
@@ -112,12 +94,6 @@ export default {
         return;
       }
       const queryParams = {
-        city: this.city,
-        street_number: this.street_number,
-        street_name: this.street_name,
-        postal_code: this.postal_code,
-        country_code: this.country_code,
-        country: this.country,
         latitude: this.latitude,
         longitude: this.longitude,
         services: this.selectedServices,
@@ -144,9 +120,9 @@ export default {
         .then((resp) => {
           this.filteredApartments = resp.data.result;
           console.log(resp);
-          const searchBox = document.querySelector(".tt-search-box");
+          /*  const searchBox = document.querySelector(".tt-search-box");
           searchBox.querySelector("input").value = ""; // Cancella il valore dalla casella di ricerca
-          this.resetParameters();
+          this.resetParameters(); */
         });
     },
     fetchServices() {
@@ -164,16 +140,10 @@ export default {
     toggleRadius() {
       this.showRadius = !this.showRadius;
     },
-    resetParameters() {
-      (this.radius = 20), (this.city = "");
-      this.street_number = "";
-      this.street_name = "";
-      this.postal_code = "";
-      this.country_code = "";
-      this.country = "";
-      this.latitude = "";
+    /*  resetParameters() {
+      (this.radius = 20), (this.latitude = "");
       this.longitude = "";
-    },
+    }, */
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
@@ -203,79 +173,6 @@ export default {
                 v-model="radius"
               />
             </div>
-          </div>
-
-          <!-- country code -->
-          <div class="mb-3 d-none">
-            <label for="country_code" class="form-label">Country code:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="country_code"
-              name="country_code"
-              v-model="country_code"
-            />
-          </div>
-
-          <!-- country -->
-          <div class="mb-3 d-none">
-            <label for="country" class="form-label">Country:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="country"
-              name="country"
-              v-model="country"
-            />
-          </div>
-
-          <!-- postal code -->
-          <div class="mb-3 d-none">
-            <label for="postal_code" class="form-label">Postal code:</label>
-
-            <input
-              type="number"
-              class="form-control"
-              id="postal_code"
-              name="postal_code"
-              v-model="postal_code"
-            />
-          </div>
-
-          <!-- city -->
-          <div class="mb-3 d-none">
-            <label for="city" class="form-label">City:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="city"
-              name="city"
-              v-model="city"
-            />
-          </div>
-
-          <!-- street name -->
-          <div class="mb-3 d-none">
-            <label for="street_name" class="form-label">Street Name:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="street_name"
-              name="street_name"
-              v-model="street_name"
-            />
-          </div>
-
-          <!-- street number -->
-          <div class="mb-3 d-none">
-            <label for="street_number" class="form-label">Street Number:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="street_number"
-              name="street_number"
-              v-model="street_number"
-            />
           </div>
 
           <!-- latitude -->
