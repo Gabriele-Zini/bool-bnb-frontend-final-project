@@ -27,7 +27,7 @@ export default {
       };
 
       axios
-        .post(`${this.store.baseUrl}/api/apartments/${slug}/messages`, data)
+        .post(`${this.store.baseUrl}/api/apartments/${this.slug}/messages`, data)
         .then((resp) => {
           console.log(resp);
         })
