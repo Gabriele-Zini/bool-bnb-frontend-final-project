@@ -85,6 +85,7 @@ export default {
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            @click="resetAll()"
           ></button>
         </div>
         <!-- Form that once sended activates the axios call -->
