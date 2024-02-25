@@ -143,6 +143,16 @@ export default {
       (this.radius = 20), (this.latitude = "");
       this.longitude = "";
     },
+    resetParameters() {
+      const searchBox = document.querySelector(".tt-search-box");
+      searchBox.querySelector("input").value = "";
+      (this.radius = 20), (this.latitude = "");
+      this.longitude = "";
+      this.num_rooms = "";
+      this.num_beds = "";
+      this.num_bathrooms = "";
+      this.mt_square = "";
+    },
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
@@ -274,6 +284,9 @@ export default {
 
           <div>
             <button type="submit" class="btn btn-success me-3">Search</button>
+            <button type="button" class="btn btn-secondary" @click="resetParameters()">
+              Reset Params
+            </button>
           </div>
         </form>
       </div>
