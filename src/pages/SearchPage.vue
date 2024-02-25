@@ -90,6 +90,24 @@ export default {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
     fetchData() {
+      if (
+        !this.city &&
+        !this.street_number &&
+        !this.street_name &&
+        !this.postal_code &&
+        !this.country_code &&
+        !this.country &&
+        !this.latitude &&
+        !this.longitude &&
+        !this.num_rooms &&
+        !this.num_beds &&
+        !this.num_bathrooms &&
+        !this.mt_square &&
+        this.selectedServices.length === 0
+      ) {
+        // Se tutti i parametri sono vuoti, esci dalla funzione senza fare nulla
+        return;
+      }
       const queryParams = {
         city: this.city,
         street_number: this.street_number,
@@ -100,6 +118,7 @@ export default {
         latitude: this.latitude,
         longitude: this.longitude,
         services: this.selectedServices,
+        radius: this.radius,
       };
 
       if (this.num_rooms) {
@@ -121,6 +140,8 @@ export default {
         })
         .then((resp) => {
           this.filteredApartments = resp.data.result;
+          console.log(resp);
+          this.resetParameters();
         });
     },
     fetchServices() {
@@ -137,6 +158,20 @@ export default {
     },
     toggleRadius() {
       this.showRadius = !this.showRadius;
+    },
+    resetParameters() {
+      this.radius = 20;
+      this.country_code = "";
+      this.postal_code = "";
+      this.street_name = "";
+      this.street_number = "";
+      this.latitude = "";
+      this.longitude = "";
+      this.city = "";
+      this.country = "";
+    },
+    getImage(imgPath) {
+      return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
   },
 };
@@ -336,24 +371,49 @@ export default {
             </div>
           </div>
 
-          <button type="submit" class="btn btn-success">Search</button>
+          <div>
+            <button type="submit" class="btn btn-success me-3">Search</button>
+          </div>
         </form>
       </div>
 
       <!-- requested data returns -->
-      <div
-        class="col-4 text-center border border-2 p-3 d-flex flex-column"
-        v-for="apartment in filteredApartments"
-      >
-        <ul class="list-unstyled">
-          <h6>{{ apartment.title }}</h6>
-          <li>
-            {{ apartment.streetName }}{{ apartment.streetNumber }}{{ apartment.city }}
-            {{ apartment.country }}
-          </li>
-        </ul>
+    </div>
+
+    <!-- apartment--card -->
+    <div class="row justify-content-center my-5">
+      <div class="col-md-10">
+        <div class="row">
+          <div
+            class="col-12 col-md-6 col-lg-3 mb-4"
+            v-for="apartment in filteredApartments"
+            :key="apartment.id"
+          >
+            <div class="card" style="height: 30rem">
+              <div v-for="image in apartment.images">
+                <img
+                  v-if="image.cover_image === 1"
+                  :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                  alt=""
+                  class="card-img-top"
+                />
+              </div>
+              <!-- <div class="card-body"> -->
+              <h5 class="card-title mt-2 fs-6">{{ apartment.title }}</h5>
+              <p class="m-0 p-0">
+                {{ apartment.street_name }} {{ apartment.street_number }}
+              </p>
+              <p class="m-0 p-0">{{ apartment.city }}</p>
+
+              <a href="#" class="me-3">Send a message</a>
+              <a href="#" class="">Details</a>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- /apartment--card -->
   </div>
 </template>
 <style lang="scss" scoped>
@@ -374,5 +434,15 @@ export default {
 #map {
   width: 100%;
   height: 300px;
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.card {
+  border: none;
 }
 </style>
