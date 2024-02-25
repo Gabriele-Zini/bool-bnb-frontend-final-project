@@ -24,6 +24,7 @@ export default {
       selectedServices: [],
       apartmentInfo: {},
       filteredApartments: [],
+      slug: ""
     };
   },
   components: {
@@ -34,6 +35,9 @@ export default {
     this.fetchServices();
   },
   methods: {
+    message(slug){
+      this.slug = slug;
+    },
     mapInit() {
       const successCallback = (position) => {
         let center = { lat: position.coords.latitude, lng: position.coords.longitude };
@@ -328,7 +332,7 @@ export default {
                 class="me-3"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                >Send a message</a
+                @click="message(apartment.slug)">Send a message</a
               >
               <a href="#" class="">Details</a>
               <!-- </div> -->
@@ -339,7 +343,7 @@ export default {
     </div>
     <!-- /apartment--card -->
   </div>
-  <AppModal />
+  <AppModal :slug="slug"/>
 </template>
 <style lang="scss" scoped>
 .cursor-pointer {
