@@ -28,6 +28,7 @@ export default {
       services: [],
       selectedServices: [],
       apartmentInfo: {},
+      filteredApartments: [],
     };
   },
   mounted() {
@@ -119,7 +120,7 @@ export default {
           params: queryParams,
         })
         .then((resp) => {
-          console.log(resp);
+          this.filteredApartments = resp.data.result;
         });
     },
     fetchServices() {
@@ -340,11 +341,16 @@ export default {
       </div>
 
       <!-- requested data returns -->
-      <div class="col-4 text-center border border-2 p-3">
-        <h2>Search results</h2>
-        <ul>
-          <li>Apartment tizio</li>
-          <li>Apartment caio</li>
+      <div
+        class="col-4 text-center border border-2 p-3 d-flex flex-column"
+        v-for="apartment in filteredApartments"
+      >
+        <ul class="list-unstyled">
+          <h6>{{ apartment.title }}</h6>
+          <li>
+            {{ apartment.streetName }}{{ apartment.streetNumber }}{{ apartment.city }}
+            {{ apartment.country }}
+          </li>
         </ul>
       </div>
     </div>
