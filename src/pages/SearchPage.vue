@@ -1,6 +1,6 @@
 <script>
 //tom tom imports
-import TomTom from "@tomtom-international/web-sdk-maps";
+import tt from "@tomtom-international/web-sdk-maps";
 import { services } from "@tomtom-international/web-sdk-services";
 import SearchBox from "@tomtom-international/web-sdk-plugin-searchbox";
 import "@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
@@ -81,6 +81,9 @@ export default {
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
         });
+        ttSearchBox.on("tomtom.searchbox.resultcleared", function () {
+          console.log("prova");
+        });
         map.addControl(ttSearchBox, "top-left");
       };
       const errorCallback = (error) => {
@@ -141,6 +144,8 @@ export default {
         .then((resp) => {
           this.filteredApartments = resp.data.result;
           console.log(resp);
+          const searchBox = document.querySelector(".tt-search-box");
+          searchBox.querySelector("input").value = ""; // Cancella il valore dalla casella di ricerca
           this.resetParameters();
         });
     },
@@ -160,15 +165,14 @@ export default {
       this.showRadius = !this.showRadius;
     },
     resetParameters() {
-      this.radius = 20;
-      this.country_code = "";
-      this.postal_code = "";
-      this.street_name = "";
+      (this.radius = 20), (this.city = "");
       this.street_number = "";
+      this.street_name = "";
+      this.postal_code = "";
+      this.country_code = "";
+      this.country = "";
       this.latitude = "";
       this.longitude = "";
-      this.city = "";
-      this.country = "";
     },
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
@@ -205,7 +209,7 @@ export default {
           <div class="mb-3 d-none">
             <label for="country_code" class="form-label">Country code:</label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               id="country_code"
               name="country_code"
@@ -230,7 +234,7 @@ export default {
             <label for="postal_code" class="form-label">Postal code:</label>
 
             <input
-              type="text"
+              type="number"
               class="form-control"
               id="postal_code"
               name="postal_code"
@@ -266,7 +270,7 @@ export default {
           <div class="mb-3 d-none">
             <label for="street_number" class="form-label">Street Number:</label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               id="street_number"
               name="street_number"
@@ -442,6 +446,7 @@ img {
   object-fit: cover;
   border-radius: 20px;
 }
+
 .card {
   border: none;
 }
