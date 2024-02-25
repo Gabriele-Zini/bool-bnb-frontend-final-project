@@ -11,6 +11,7 @@ export default {
   data() {
     return {
       store,
+      radius: 20,
       country_code: "",
       postal_code: "",
       street_name: "",
@@ -89,6 +90,7 @@ export default {
       axios
         .get(`${this.store.baseUrl}/api/apartments`, {
           params: {
+            radius: this.radius,
             city: this.city,
             street_number: this.street_number,
             street_name: this.street_name,
@@ -133,6 +135,18 @@ export default {
           <h4 class="mt-2">Select a position:</h4>
           <div class="map form-control" id="map"></div>
 
+          <!-- radius -->
+          <div class="mb-3 mt-4">
+            <label for="raiuds" class="form-label">Radius in km:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="raiuds"
+              name="raiuds"
+              v-model="radius"
+            />
+          </div>
+
           <!-- country code -->
           <div class="mb-3 d-none">
             <label for="country_code" class="form-label">Country code:</label>
@@ -144,6 +158,7 @@ export default {
               v-model="country_code"
             />
           </div>
+
           <!-- country -->
           <div class="mb-3 d-none">
             <label for="country" class="form-label">Country:</label>
@@ -231,7 +246,7 @@ export default {
           <!-- APARTMENT INFOS -->
 
           <!-- num bed -->
-          <div class="mb-3 mt-4">
+          <div class="mb-3">
             <label for="num_bed" class="form-label">Beds Number:</label>
             <input
               type="text"
