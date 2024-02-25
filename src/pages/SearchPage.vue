@@ -6,6 +6,7 @@ import SearchBox from "@tomtom-international/web-sdk-plugin-searchbox";
 import "@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
 import { store } from "../store";
 import axios from "axios";
+import AppModal from "../components/AppModal.vue";
 
 export default {
   data() {
@@ -24,6 +25,9 @@ export default {
       apartmentInfo: {},
       filteredApartments: [],
     };
+  },
+  components: {
+    AppModal,
   },
   mounted() {
     this.mapInit();
@@ -319,7 +323,13 @@ export default {
               </p>
               <p class="m-0 p-0">{{ apartment.city }}</p>
 
-              <a href="#" class="me-3">Send a message</a>
+              <a
+                href="#"
+                class="me-3"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                >Send a message</a
+              >
               <a href="#" class="">Details</a>
               <!-- </div> -->
             </div>
@@ -329,6 +339,7 @@ export default {
     </div>
     <!-- /apartment--card -->
   </div>
+  <AppModal />
 </template>
 <style lang="scss" scoped>
 .cursor-pointer {
