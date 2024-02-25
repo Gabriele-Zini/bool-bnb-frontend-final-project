@@ -22,17 +22,16 @@ export default {
         name: this.name,
         lastname: this.lastname,
         email: this.email,
-        text: this.text,
-        slug: this.slug
+        message_content: this.text
       }
-
+      console.log(data);
       axios
-      .post(`${this.store.baseUrl}/api/apartments/${slug}/messages`, data)
+      .post(`${this.store.baseUrl}/api/apartments/${this.slug}/messages`, data)
       .then((resp) => {
         console.log(resp);
       })
       .catch((err)=>{
-
+        console.log(err);
       })
       .finally(() => {
         this.loading = false
