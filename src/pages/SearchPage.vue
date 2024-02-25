@@ -12,6 +12,7 @@ export default {
     return {
       store,
       radius: 20,
+      showRadius: false,
       country_code: "",
       postal_code: "",
       street_name: "",
@@ -20,12 +21,13 @@ export default {
       longitude: "",
       city: "",
       country: "",
-      num_bed: "",
+      num_beds: "",
       num_rooms: "",
       num_bathrooms: "",
       mt_square: "",
       services: [],
       selectedServices: [],
+      apartmentInfo: {},
     };
   },
   mounted() {
@@ -87,24 +89,34 @@ export default {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
     fetchData() {
+      const queryParams = {
+        city: this.city,
+        street_number: this.street_number,
+        street_name: this.street_name,
+        postal_code: this.postal_code,
+        country_code: this.country_code,
+        country: this.country,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        services: this.selectedServices,
+      };
+
+      if (this.num_rooms) {
+        queryParams.num_rooms = this.num_rooms;
+      }
+      if (this.num_beds) {
+        queryParams.num_beds = this.num_beds;
+      }
+      if (this.num_bathrooms) {
+        queryParams.num_bathrooms = this.num_bathrooms;
+      }
+      if (this.mt_square) {
+        queryParams.mt_square = this.mt_square;
+      }
+
       axios
         .get(`${this.store.baseUrl}/api/apartments`, {
-          params: {
-            radius: this.radius,
-            city: this.city,
-            street_number: this.street_number,
-            street_name: this.street_name,
-            postal_code: this.postal_code,
-            country_code: this.country_code,
-            country: this.country,
-            latitude: this.latitude,
-            longitude: this.longitude,
-            services: this.selectedServices,
-            /* num_beds: this.num_beds,
-            num_rooms: this.num_rooms,
-            num_bathrooms: this.num_bathrooms,
-            mt_square: this.mt_square */
-          },
+          params: queryParams,
         })
         .then((resp) => {
           console.log(resp);
@@ -122,6 +134,9 @@ export default {
         this.selectedServices.push(serviceName);
       }
     },
+    toggleRadius() {
+      this.showRadius = !this.showRadius;
+    },
   },
 };
 </script>
@@ -136,15 +151,18 @@ export default {
           <div class="map form-control" id="map"></div>
 
           <!-- radius -->
-          <div class="mb-3 mt-4">
-            <label for="raiuds" class="form-label">Radius in km:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="raiuds"
-              name="raiuds"
-              v-model="radius"
-            />
+          <div class="my-3">
+            <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
+            <div class="mb-3 mt-4 radius-div" :class="{ 'd-none': !showRadius }">
+              <label for="raiuds" class="form-label">Radius in km:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="raiuds"
+                name="raiuds"
+                v-model="radius"
+              />
+            </div>
           </div>
 
           <!-- country code -->
@@ -247,13 +265,13 @@ export default {
 
           <!-- num bed -->
           <div class="mb-3">
-            <label for="num_bed" class="form-label">Beds Number:</label>
+            <label for="num_beds" class="form-label">Beds Number:</label>
             <input
               type="text"
               class="form-control"
-              id="num_bed"
-              name="num_bed"
-              v-model="num_bed"
+              id="num_beds"
+              name="num_beds"
+              v-model="num_beds"
             />
           </div>
 
@@ -333,6 +351,20 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.radius-div {
+  transition: opacity 1s ease;
+  opacity: 0;
+}
+
+.radius-div:not(.d-none) {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
 #map {
   width: 100%;
   height: 300px;
