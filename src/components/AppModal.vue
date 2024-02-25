@@ -13,7 +13,8 @@ export default {
       text: "",
       loading: false,
       store,
-      error: ""
+      error: "",
+      checkError: false,
     };
   },
   methods: {
@@ -27,8 +28,16 @@ export default {
         slug: this.slug,
       };
 
-      if(this.name === "" || this.lastname === "" || this.email === "" || this.text === ""){
-        return error = "Please check the fields"
+      if (
+        this.name === "" ||
+        this.lastname === "" ||
+        this.email === "" ||
+        this.text === ""
+      ) {
+        this.loading = false;
+        this.checkError = true;
+        console.log(this.checkError);
+        return (this.error = "Please check the fields");
       }
 
       this.name = "";
@@ -48,6 +57,13 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    resetAll() {
+      this.name = "";
+      this.lastname = "";
+      this.email = "";
+      this.text = "";
+      this.checkError = false;
     },
   },
 };
@@ -119,9 +135,17 @@ export default {
                 placeholder="Your message here..."
               ></textarea>
             </div>
+            <div v-if="checkError">
+              <p class="text-danger">{{ error }}</p>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="resetAll()"
+            >
               Close
             </button>
             <button :disabled="loading" type="submit" class="btn btn-success">
