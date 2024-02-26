@@ -52,6 +52,7 @@ export default {
                     <li class="nav-item" v-for="link in links" :key="link.title">
                         <router-link :to="{ name: link.name }" class="nav-link">{{ link.title }}</router-link>
                     </li>
+                    <li class="nav-item"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
                 </ul>
             </div>
         </div>
