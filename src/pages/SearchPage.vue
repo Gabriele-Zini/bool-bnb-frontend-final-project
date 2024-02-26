@@ -175,7 +175,7 @@ export default {
       <div class="col-4 text-center border border-2 p-3">
         <form @submit.prevent="fetchData()" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
-          <p class="cursor-pointer" @click="resetPosition()">reset position</p>
+          <button class="btn btn-primary my-2" @click="resetPosition()">reset position</button>
           <div class="map form-control" id="map"></div>
 
           <!-- radius -->
