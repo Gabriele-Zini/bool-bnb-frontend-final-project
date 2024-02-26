@@ -21,7 +21,7 @@ export default {
 }
 </script>
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid mt-5">
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
                 <h2 class="mb-5 text-center"> {{ apartment.title }} </h2>

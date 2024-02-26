@@ -73,9 +73,16 @@ export default {
 
         const ttSearchBox = new SearchBox(services, options);
 
+        ttSearchBox.updateOptions({
+          showSearchButton: false,
+          labels: {
+            placeholder: "Start from a position",
+          },
+        })
+
         ttSearchBox.on("tomtom.searchbox.resultselected", (e) => {
           map.flyTo({ center: e.data.result.position });
-          console.log(e.data.result.position);
+          // console.log(e.data.result.position);
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
         });
@@ -85,6 +92,7 @@ export default {
       const errorCallback = (error) => {
         console.log(error);
       };
+
 
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
@@ -121,16 +129,16 @@ export default {
           })
           .then((resp) => {
             this.params = 2;
-            console.log(this.params);
-            console.log(resp);
+            // console.log(this.params);
+            // console.log(resp);
             this.filteredApartments = resp.data.result;
             this.params = 0;
             if (resp.data.success === false) {
               this.results = false;
-              console.log(this.results);
+              // console.log(this.results);
             } else {
               this.results = true;
-              console.log(this.results);
+              // console.log(this.results);
             }
           });
       }
@@ -188,16 +196,10 @@ export default {
               </button> -->
 
               <div class="my-3 radius">
-                <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
+                <a class="cursor-pointer" v-on:click="toggleRadius">set radius &DownArrow;</a>
                 <div class="mb-3 mt-4 radius-div w-50" :class="{ 'd-none': !showRadius }">
                   <label for="raiuds" class="form-label">Radius in km:</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="raiuds"
-                    name="raiuds"
-                    v-model="radius"
-                  />
+                  <input type="number" class="form-control" id="raiuds" name="raiuds" v-model="radius" />
                 </div>
               </div>
             </div>
@@ -206,24 +208,12 @@ export default {
               <!-- latitude -->
               <div class="mb-3 d-none">
                 <label for="latitude" class="form-label">Latitude:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="latitude"
-                  name="latitude"
-                  v-model="latitude"
-                />
+                <input type="text" class="form-control" id="latitude" name="latitude" v-model="latitude" />
               </div>
               <!-- longitude -->
               <div class="mb-3 d-none">
                 <label for="longitude" class="form-label">Longitude:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="longitude"
-                  name="longitude"
-                  v-model="longitude"
-                />
+                <input type="text" class="form-control" id="longitude" name="longitude" v-model="longitude" />
               </div>
 
               <!-- APARTMENT INFOS -->
@@ -231,55 +221,26 @@ export default {
               <!-- num bed -->
               <div class="mb-3">
                 <label for="num_beds" class="form-label">Beds Number:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="num_beds"
-                  name="num_beds"
-                  v-model="num_beds"
-                />
+                <input type="text" class="form-control" id="num_beds" name="num_beds" v-model="num_beds" />
               </div>
 
               <!-- num room -->
               <div class="mb-3">
                 <label for="num_rooms" class="form-label">Rooms Number:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="num_rooms"
-                  name="num_rooms"
-                  v-model="num_rooms"
-                />
+                <input type="text" class="form-control" id="num_rooms" name="num_rooms" v-model="num_rooms" />
               </div>
 
               <!-- num bathrooms -->
               <div class="mb-3">
                 <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="num_bathrooms"
-                  name="num_bathrooms"
-                  v-model="num_bathrooms"
-                />
+                <input type="text" class="form-control" id="num_bathrooms" name="num_bathrooms" v-model="num_bathrooms" />
               </div>
 
-              <div
-                class="btn-sm my-3"
-                role="group"
-                aria-label="Basic checkbox toggle button group"
-              >
+              <div class="btn-sm my-3" role="group" aria-label="Basic checkbox toggle button group">
                 <div class="row g-2">
                   <div class="" v-for="service in services">
-                    <input
-                      type="checkbox"
-                      class="btn-check"
-                      :id="service.id"
-                      :name="service.name"
-                      value="1"
-                      autocomplete="off"
-                      @change="updateSelectedServices(service.name)"
-                    />
+                    <input type="checkbox" class="btn-check" :id="service.id" :name="service.name" value="1"
+                      autocomplete="off" @change="updateSelectedServices(service.name)" />
                     <label class="btn btn-outline-dark" :for="service.id">
                       {{ service.name }}
                     </label>
@@ -291,7 +252,7 @@ export default {
           <!-- services -->
 
           <div>
-            <button type="submit" class="btnn">Search</button>
+            <button type="submit" class="btnn me-2">Search</button>
             <button type="button" class="rem" @click="resetParameters()">
               Reset Params
             </button>
@@ -312,19 +273,11 @@ export default {
     <div class="row justify-content-center my-5" v-if="params !== 1">
       <div class="col-md-10">
         <div class="row">
-          <div
-            class="col-12 col-md-6 col-lg-3 mb-4"
-            v-for="apartment in filteredApartments"
-            :key="apartment.id"
-          >
+          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
             <div class="card" style="height: 30rem">
               <div v-for="image in apartment.images">
-                <img
-                  v-if="image.cover_image === 1"
-                  :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                  alt=""
-                  class="card-img-top"
-                />
+                <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                  alt="" class="card-img-top" />
               </div>
               <!-- <div class="card-body"> -->
               <h5 class="card-title mt-2 fs-6">{{ apartment.title }}</h5>
@@ -333,19 +286,10 @@ export default {
               </p>
               <p class="m-0 p-0">{{ apartment.city }}</p>
 
-              <a
-                href="#"
-                class="btnn"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="message(apartment.slug)"
-                >Send a message</a
-              >
-              <router-link
-                :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="rem"
-                >Mostra</router-link
-              >
+              <a href="#" class="btnn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                @click="message(apartment.slug)">Send a message</a>
+              <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                class="rem">Mostra</router-link>
               <!-- </div> -->
             </div>
           </div>
@@ -364,22 +308,6 @@ export default {
   border: 1px solid #eaecf0;
   border-radius: 10px;
   padding: 20px;
-}
-
-.btnn {
-  @include btnn();
-}
-
-.rem {
-  @include rem();
-}
-
-.btnn:hover {
-  @include hoverBtn();
-}
-
-.rem:hover {
-  @include remHover();
 }
 
 .cursor-pointer {
@@ -411,9 +339,5 @@ img {
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 20px;
-}
-
-.card {
-  border: none;
 }
 </style>

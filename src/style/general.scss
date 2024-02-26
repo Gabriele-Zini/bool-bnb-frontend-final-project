@@ -1,13 +1,18 @@
-@use "/src/style/partials/mixin" as *;
+@use "./partials/mixin" as *;
+@use "./partials/variables" as *;
 @import "bootstrap/scss/bootstrap.scss";
 
 
 * {
     font-family: 'Montserrat', sans-serif;
 }
+
 body {
-    background-color: #FCFCFD;
+    background-color: rgb(247, 247, 247);
+    width: 100%;
+    overflow-x: hidden;
 }
+
 form,input,label,h4 {
     @include p_color;
 }
