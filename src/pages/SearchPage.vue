@@ -169,20 +169,20 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid mt-5">
+  <div class="container-fluid mt-5 w-100">
     <div class="row justify-content-center">
       <!-- form to request data -->
-      <div class="col-4 text-center border border-2 p-3">
+      <div class="col-8 col-md-6 col-sm-4 text-center border border-2 p-3">
         <form @submit.prevent="fetchData()" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
-          <button class="btn btn-primary my-2" @click="resetPosition()">reset position</button>
+          <button class="btn btn-primary my-3" @click="resetPosition()">reset position</button>
           <div class="map form-control" id="map"></div>
 
           <!-- radius -->
           <div class="my-3">
-            <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
+            <button class="btn btn-primary my-3" v-on:click="toggleRadius">set radius</button>
             <div class="mb-3 mt-4 radius-div" :class="{ 'd-none': !showRadius }">
-              <label for="raiuds" class="form-label">Radius in km:</label>
+              <label for="raiuds" class="form-label ">Radius in km:</label>
               <input
                 type="number"
                 class="form-control"
@@ -268,12 +268,12 @@ export default {
 
           <!-- services -->
           <div
-            class="btn-group btn-group-sm my-3"
+            class="btn-group btn-group my-3"
             role="group"
             aria-label="Basic checkbox toggle button group"
           >
             <div class="row g-2 justify-content-start align-items-center">
-              <div class="col" v-for="service in services">
+              <div class="col-4" v-for="service in services">
                 <input
                   type="checkbox"
                   class="btn-check"
@@ -290,7 +290,7 @@ export default {
             </div>
           </div>
 
-          <div>
+          <div class="col-8 ">
             <button type="submit" class="btn btn-success me-3">Search</button>
             <button type="button" class="btn btn-secondary" @click="resetParameters()">
               Reset Params
