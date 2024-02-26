@@ -264,17 +264,6 @@ export default {
                 />
               </div>
 
-              <!-- mt_square -->
-              <!-- <div class="mb-3">
-            <label for="mt_square" class="form-label">Mt. square:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="mt_square"
-              name="mt_square"
-              v-model="mt_square"
-            />
-          </div> -->
               <div
                 class="btn-sm my-3"
                 role="group"
@@ -310,7 +299,11 @@ export default {
         </form>
         <!-- requested data returns -->
         <div class="mt-5" v-if="params === 1">
-          <h4>Posizione non trovata</h4>
+          <h4>Error: Please insert geographic parameters.</h4>
+        </div>
+        <!-- requested data returns -->
+        <div class="mt-5" v-if="!results && params !== 1">
+          <h4>No apartments found</h4>
         </div>
       </div>
     </div>
