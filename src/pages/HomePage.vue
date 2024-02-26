@@ -20,11 +20,17 @@ export default {
         this.apartments = resp.data.result.data;
       });
     },
+    truncateString(stringa, lunghezzaMassima) {
+      if (stringa.length <= lunghezzaMassima) {
+        return stringa;
+      } else {
+        return stringa.substring(0, lunghezzaMassima) + "...";
+      }
+    },
   },
 };
 </script>
 <template>
-
   <div class="container-fluid mt-5">
     <div class="row h-100">
       <div class="col-auto mx-auto title">
@@ -50,7 +56,9 @@ export default {
                 class="card-img-top"
               />
               <!-- <div class="card-body"> -->
-              <h5 class="card-title mt-2 fs-6">{{ apartment.title }}</h5>
+              <h5 class="card-title mt-2 fs-6">
+                {{ truncateString(apartment.title, 15) }}
+              </h5>
               <p class="m-0 p-0">
                 {{ apartment.street_name }} {{ apartment.street_number }}
               </p>
@@ -100,5 +108,4 @@ export default {
     }
   }
 }
-
 </style>
