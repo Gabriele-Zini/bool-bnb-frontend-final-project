@@ -24,7 +24,8 @@ export default {
       selectedServices: [],
       apartmentInfo: {},
       filteredApartments: [],
-      slug: ""
+      slug: "",
+      params: 0,
     };
   },
   components: {
@@ -35,7 +36,7 @@ export default {
     this.fetchServices();
   },
   methods: {
-    message(slug){
+    message(slug) {
       this.slug = slug;
     },
     mapInit() {
@@ -77,9 +78,7 @@ export default {
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
         });
-        ttSearchBox.on("tomtom.searchbox.resultcleared", function () {
-          console.log("prova");
-        });
+        ttSearchBox.on("tomtom.searchbox.resultscleared", this.resetPosition);
         map.addControl(ttSearchBox, "top-left");
       };
       const errorCallback = (error) => {
@@ -89,46 +88,44 @@ export default {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
     fetchData() {
-      if (
-        !this.latitude &&
-        !this.longitude &&
-        !this.num_rooms &&
-        !this.num_beds &&
-        !this.num_bathrooms &&
-        !this.mt_square &&
-        this.selectedServices.length === 0
-      ) {
+      if (!this.latitude && !this.longitude) {
+        this.params = 1;
         // Se tutti i parametri sono vuoti, esci dalla funzione senza fare nulla
         return;
-      }
-      const queryParams = {
-        latitude: this.latitude,
-        longitude: this.longitude,
-        services: this.selectedServices,
-        radius: this.radius,
-      };
+      } else {
+        this.params = 2;
+        const queryParams = {
+          latitude: this.latitude,
+          longitude: this.longitude,
+          services: this.selectedServices,
+          radius: this.radius,
+        };
 
-      if (this.num_rooms) {
-        queryParams.num_rooms = this.num_rooms;
-      }
-      if (this.num_beds) {
-        queryParams.num_beds = this.num_beds;
-      }
-      if (this.num_bathrooms) {
-        queryParams.num_bathrooms = this.num_bathrooms;
-      }
-      if (this.mt_square) {
-        queryParams.mt_square = this.mt_square;
-      }
+        if (this.num_rooms) {
+          queryParams.num_rooms = this.num_rooms;
+        }
+        if (this.num_beds) {
+          queryParams.num_beds = this.num_beds;
+        }
+        if (this.num_bathrooms) {
+          queryParams.num_bathrooms = this.num_bathrooms;
+        }
+        if (this.mt_square) {
+          queryParams.mt_square = this.mt_square;
+        }
 
-      axios
-        .get(`${this.store.baseUrl}/api/apartments`, {
-          params: queryParams,
-        })
-        .then((resp) => {
-          this.filteredApartments = resp.data.result;
-          console.log(resp);
-        });
+        axios
+          .get(`${this.store.baseUrl}/api/apartments`, {
+            params: queryParams,
+          })
+          .then((resp) => {
+            this.params = 2;
+            console.log(this.params);
+            console.log(resp.data);
+            this.filteredApartments = resp.data.result;
+            this.params = 0;
+          });
+      }
     },
     fetchServices() {
       axios.get(`${this.store.baseUrl}/api/services`).then((resp) => {
@@ -175,7 +172,6 @@ export default {
       <div class="col-4 text-center border border-2 p-3">
         <form @submit.prevent="fetchData()" action="" method="GET">
           <h4 class="mt-2">Select a position:</h4>
-          <p class="cursor-pointer" @click="resetPosition()">reset position</p>
           <div class="map form-control" id="map"></div>
 
           <!-- radius -->
@@ -301,9 +297,12 @@ export default {
 
       <!-- requested data returns -->
     </div>
+    <div v-if="params === 1">
+      <h1>ciccio pasticcio</h1>
+    </div>
 
     <!-- apartment--card -->
-    <div class="row justify-content-center my-5">
+    <div class="row justify-content-center my-5" v-if="params !== 1">
       <div class="col-md-10">
         <div class="row">
           <div
@@ -332,7 +331,8 @@ export default {
                 class="me-3"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                @click="message(apartment.slug)">Send a message</a
+                @click="message(apartment.slug)"
+                >Send a message</a
               >
               <a href="#" class="">Details</a>
               <!-- </div> -->
