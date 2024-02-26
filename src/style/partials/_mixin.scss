@@ -8,6 +8,7 @@
     transition: $transition;
     color: $colo;
 }
+
 @mixin hoverBtn($background: #36BFFA, $color: white,) {
     background-color: $background;
     color: $color;
@@ -28,4 +29,10 @@
 }
 @mixin p_color($color: #98A2B3) {
     color: $color;
+}
+
+@mixin flex($direction, $justify, $align) {
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
 }

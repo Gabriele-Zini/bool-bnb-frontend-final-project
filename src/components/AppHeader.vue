@@ -51,6 +51,11 @@ export default {
 @use "../style/partials/variables" as *;
 .navbar {
   background-color: #f2f4f7;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  width: 100%;
 }
 .logo {
   img {

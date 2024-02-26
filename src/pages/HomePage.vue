@@ -24,9 +24,12 @@ export default {
 };
 </script>
 <template>
-  <div class="container-fluid">
-    <div class="title m-5">
-      <h1>BOOLBNB</h1>
+
+  <div class="container-fluid mt-5">
+    <div class="row h-100">
+      <div class="col-auto mx-auto title">
+        <h1>BOOLBNB</h1>
+      </div>
     </div>
   </div>
 
@@ -76,20 +79,26 @@ export default {
   <!-- /apartment--card -->
 </template>
 <style lang="scss" scoped>
+@use "../style/general.scss" as *;
+@use "../style/partials/variables" as *;
+
 .container-fluid {
   background-image: url(../assets/img/interior-home.jpg);
   background-size: cover;
-  position: absolute;
   background-position: center;
   height: 500px;
 
   .title {
     display: flex;
     justify-content: center;
+    height: 100%;
+    align-items: center;
     h1 {
-      font-size: 5rem;
+      font-size: 6.5rem;
       color: white;
+      text-shadow: 4px 4px 6px black;
     }
   }
 }
+
 </style>
