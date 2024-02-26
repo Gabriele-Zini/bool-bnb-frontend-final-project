@@ -30,13 +30,17 @@ export default {
                     <li class="nav-item" v-for="link in links" :key="link.title">
                         <router-link :to="{ name: link.name }" class="nav-link">{{ link.title }}</router-link>
                     </li>
-                    <li class="nav-item"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
+                    <li class="nav-item"><a href="http://127.0.0.1:8000/login" class="nav-link">Area Riservata</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
 <style lang="scss" scoped>
+@use "../style/partials/variables" as *;
+.navbar {
+    background-color: #F2F4F7;
+}
 .logo {
     img {
         max-height: 40px;
@@ -51,7 +55,7 @@ export default {
     }
 
     a:hover {
-        color: #36BFFA;
+        color: $light-blue;
         border-radius: 10px;
         background: none;
     }
