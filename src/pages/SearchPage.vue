@@ -273,7 +273,7 @@ export default {
             aria-label="Basic checkbox toggle button group"
           >
             <div class="row g-2 justify-content-start align-items-center">
-              <div class="col-4" v-for="service in services">
+              <div class="col" v-for="service in services">
                 <input
                   type="checkbox"
                   class="btn-check"
@@ -290,7 +290,7 @@ export default {
             </div>
           </div>
 
-          <div class="col-8 ">
+          <div class="my-4 ">
             <button type="submit" class="btn btn-success me-3">Search</button>
             <button type="button" class="btn btn-secondary" @click="resetParameters()">
               Reset Params
