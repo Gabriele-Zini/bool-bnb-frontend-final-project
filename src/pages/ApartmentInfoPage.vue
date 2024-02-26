@@ -52,7 +52,6 @@ export default {
                 <strong>Services:</strong>
                 <div>
                     <p class="d-inline" v-for="(service, index) in apartment.services" :key="service.index">{{ index > 0 ? ', ' : '' }}{{ service.name }}{{ index == apartment.services.length - 1 ? '.' : '' }}</p>
-                    <!-- <span v-for="(service, index) in apartment.services" :key="service.index" class="badge bg-primary">{{ service.name }}</span> -->
                 </div>
 
 
