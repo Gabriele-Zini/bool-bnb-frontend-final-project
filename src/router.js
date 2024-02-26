@@ -15,7 +15,7 @@ const router = createRouter({
         },
 
         {
-            path: "/",
+            path: "/search",
             name: "search",
             component: SearchPage,
         },
