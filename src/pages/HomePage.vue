@@ -16,14 +16,6 @@ export default {
     <div class="title m-5">
         <h1>BOOLBNB</h1>
     </div>
-    <div class="buttons">
-        <div class="btn">
-            <a href="">accedi</a>
-        </div>
-        <div class="btn">
-            <a href="">registrati</a>
-        </div>
-    </div>
 </div>
 
 </template>
@@ -33,18 +25,7 @@ export default {
     background-size: cover;
     position: absolute;
     background-position: center;
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-        .btn {
-            a {
-                text-decoration: none;
-                color: white;
-                border-bottom: 1px solid white;
-            }
-        }
-    }
+    height: 500px;
 
     .title {
         display: flex;

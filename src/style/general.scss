@@ -1,3 +1,4 @@
+@use "/src/style/partials/mixin" as *;
 @import "bootstrap/scss/bootstrap.scss";
 
 
@@ -6,4 +7,7 @@
 }
 body {
     background-color: #FCFCFD;
+}
+form,input,label,h4 {
+    @include p_color;
 }

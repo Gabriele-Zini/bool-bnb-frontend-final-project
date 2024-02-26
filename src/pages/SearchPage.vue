@@ -166,34 +166,35 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid mt-5">
+  <div class="container-fluid">
     <div class="row justify-content-center">
       <!-- form to request data -->
       <div class="col-xl-10 col-md-10 col-ms-12 border-bottom pb-4">
+        <h4 class="p-4">Select a position:</h4>
         <form @submit.prevent="fetchData()" action="" method="GET">
-          <div class="box-select">
-            <h4 class="">Select a position:</h4>
-            <button class="btn border m-3" @click="resetPosition()">
-              reset position
-            </button>
-            <div class="map form-control" id="map"></div>
+          <div class="row">
+            <div class="col-8">
+              <div class="map form-control" id="map"></div>
+              <!-- <button class="btnn" @click="resetPosition()">
+                reset position
+              </button> -->
 
-            <!-- radius -->
-
-            <div class="my-3 radius">
-              <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
-              <div class="mb-3 mt-4 radius-div w-50" :class="{ 'd-none': !showRadius }">
-                <label for="raiuds" class="form-label">Radius in km:</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="raiuds"
-                  name="raiuds"
-                  v-model="radius"
-                />
-              </div>
+              <div class="my-3 radius">
+                <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
+                <div class="mb-3 mt-4 radius-div w-50" :class="{ 'd-none': !showRadius }">
+                  <label for="raiuds" class="form-label">Radius in km:</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="raiuds"
+                    name="raiuds"
+                    v-model="radius"
+                  />
+                </div>
+              </div> 
             </div>
-            <div class="box-apartment">
+            <!-- radius -->
+            <div class="col-4 bro">
               <!-- latitude -->
               <div class="mb-3 d-none">
                 <label for="latitude" class="form-label">Latitude:</label>
@@ -220,7 +221,7 @@ export default {
               <!-- APARTMENT INFOS -->
 
               <!-- num bed -->
-              <div class="mb-3 w-50">
+              <div class="mb-3">
                 <label for="num_beds" class="form-label">Beds Number:</label>
                 <input
                   type="text"
@@ -232,7 +233,7 @@ export default {
               </div>
 
               <!-- num room -->
-              <div class="mb-3 w-50">
+              <div class="mb-3">
                 <label for="num_rooms" class="form-label">Rooms Number:</label>
                 <input
                   type="text"
@@ -244,7 +245,7 @@ export default {
               </div>
 
               <!-- num bathrooms -->
-              <div class="mb-3 w-50">
+              <div class="mb-3">
                 <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
                 <input
                   type="text"
@@ -266,16 +267,13 @@ export default {
               v-model="mt_square"
             />
           </div> -->
-            </div>
-          </div>
-          <!-- services -->
           <div
-            class="btn-group btn-group-sm my-3"
+            class="btn-sm my-3"
             role="group"
             aria-label="Basic checkbox toggle button group"
           >
-            <div class="row g-2 justify-content-start align-items-center">
-              <div class="col" v-for="service in services">
+            <div class="row g-2">
+              <div class="" v-for="service in services">
                 <input
                   type="checkbox"
                   class="btn-check"
@@ -285,26 +283,29 @@ export default {
                   autocomplete="off"
                   @change="updateSelectedServices(service.name)"
                 />
-                <label class="btn btn-outline-primary ms_whitespace" :for="service.id">
+                <label class="btn btn-outline-dark " :for="service.id">
                   {{ service.name }}
                 </label>
               </div>
             </div>
           </div>
+            </div>
+          </div>
+          <!-- services -->
 
           <div>
-            <button type="submit" class="btns-search">Search</button>
-            <button type="button" class="btn btn-secondary" @click="resetParameters()">
+            <button type="submit" class="btnn">Search</button>
+            <button type="button" class="rem" @click="resetParameters()">
               Reset Params
             </button>
           </div>
         </form>
+        <!-- requested data returns -->
+        <div class="mt-5" v-if="params === 1">
+          <h4>Posizione non trovata</h4>
+        </div>
       </div>
 
-      <!-- requested data returns -->
-    </div>
-    <div v-if="params === 1">
-      <h1>ciccio pasticcio</h1>
     </div>
 
     <!-- apartment--card -->
@@ -334,7 +335,7 @@ export default {
 
               <a
                 href="#"
-                class="me-3"
+                class="btnn"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 @click="message(apartment.slug)"
@@ -342,7 +343,7 @@ export default {
               >
               <router-link
                 :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="btn btn-warning w-50"
+                class="rem"
                 >Mostra</router-link
               >
               <!-- </div> -->
@@ -356,36 +357,31 @@ export default {
   <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
-.box-apartment {
-  display: flex;
-  justify-content: center;
-}
-.btns-search {
-  border-bottom: #36bffa;
-  color: #36bffa;
-  background: none;
-  padding: 10px;
+@use "../style/partials/mixin" as *;
+.bro {
+  background-color: #F2F4F7;
+  border: 1px solid #EAECF0;
   border-radius: 10px;
+  padding: 20px
 }
-.btns-search:hover {
-  color: white;
-  background-color: #36bffa;
+.btnn {
+  @include btnn();
+}
+.rem {
+  @include rem();
+}
+.btnn:hover {
+  @include hoverBtn();
+}
+.rem:hover {
+  @include remHover();
 }
 .cursor-pointer {
   cursor: pointer;
-  background: none;
-  border: 0.5px solid #36bffa;
-  color: #36bffa;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 10px;
+  @include btnn();
 }
 .cursor-pointer:hover {
-  background-color: #36bffa;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  text-decoration: none;
+  @include hoverBtn();
 }
 
 .radius-div {
@@ -400,7 +396,7 @@ export default {
 
 #map {
   width: 100%;
-  height: 300px;
+  height: 400px;
 }
 
 img {
