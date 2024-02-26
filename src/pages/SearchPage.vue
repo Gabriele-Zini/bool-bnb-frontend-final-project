@@ -169,89 +169,94 @@ export default {
   <div class="container-fluid mt-5">
     <div class="row justify-content-center">
       <!-- form to request data -->
-      <div class="col-4 text-center border border-2 p-3">
+      <div class="col-xl-10 col-md-10 col-ms-12 border-bottom pb-4">
         <form @submit.prevent="fetchData()" action="" method="GET">
-          <h4 class="mt-2">Select a position:</h4>
-          <div class="map form-control" id="map"></div>
+          <div class="box-select">
+            <h4 class="">Select a position:</h4>
+            <button class="btn border m-3" @click="resetPosition()">
+              reset position
+            </button>
+            <div class="map form-control" id="map"></div>
 
-          <!-- radius -->
-          <div class="my-3">
-            <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
-            <div class="mb-3 mt-4 radius-div" :class="{ 'd-none': !showRadius }">
-              <label for="raiuds" class="form-label">Radius in km:</label>
-              <input
-                type="number"
-                class="form-control"
-                id="raiuds"
-                name="raiuds"
-                v-model="radius"
-              />
+            <!-- radius -->
+
+            <div class="my-3 radius">
+              <a class="cursor-pointer" v-on:click="toggleRadius">set radius</a>
+              <div class="mb-3 mt-4 radius-div w-50" :class="{ 'd-none': !showRadius }">
+                <label for="raiuds" class="form-label">Radius in km:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="raiuds"
+                  name="raiuds"
+                  v-model="radius"
+                />
+              </div>
             </div>
-          </div>
+            <div class="box-apartment">
+              <!-- latitude -->
+              <div class="mb-3 d-none">
+                <label for="latitude" class="form-label">Latitude:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="latitude"
+                  name="latitude"
+                  v-model="latitude"
+                />
+              </div>
+              <!-- longitude -->
+              <div class="mb-3 d-none">
+                <label for="longitude" class="form-label">Longitude:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="longitude"
+                  name="longitude"
+                  v-model="longitude"
+                />
+              </div>
 
-          <!-- latitude -->
-          <div class="mb-3 d-none">
-            <label for="latitude" class="form-label">Latitude:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="latitude"
-              name="latitude"
-              v-model="latitude"
-            />
-          </div>
-          <!-- longitude -->
-          <div class="mb-3 d-none">
-            <label for="longitude" class="form-label">Longitude:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="longitude"
-              name="longitude"
-              v-model="longitude"
-            />
-          </div>
+              <!-- APARTMENT INFOS -->
 
-          <!-- APARTMENT INFOS -->
+              <!-- num bed -->
+              <div class="mb-3 w-50">
+                <label for="num_beds" class="form-label">Beds Number:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="num_beds"
+                  name="num_beds"
+                  v-model="num_beds"
+                />
+              </div>
 
-          <!-- num bed -->
-          <div class="mb-3">
-            <label for="num_beds" class="form-label">Beds Number:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="num_beds"
-              name="num_beds"
-              v-model="num_beds"
-            />
-          </div>
+              <!-- num room -->
+              <div class="mb-3 w-50">
+                <label for="num_rooms" class="form-label">Rooms Number:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="num_rooms"
+                  name="num_rooms"
+                  v-model="num_rooms"
+                />
+              </div>
 
-          <!-- num room -->
-          <div class="mb-3">
-            <label for="num_rooms" class="form-label">Rooms Number:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="num_rooms"
-              name="num_rooms"
-              v-model="num_rooms"
-            />
-          </div>
+              <!-- num bathrooms -->
+              <div class="mb-3 w-50">
+                <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="num_bathrooms"
+                  name="num_bathrooms"
+                  v-model="num_bathrooms"
+                />
+              </div>
 
-          <!-- num bathrooms -->
-          <div class="mb-3">
-            <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="num_bathrooms"
-              name="num_bathrooms"
-              v-model="num_bathrooms"
-            />
-          </div>
-
-          <!-- mt_square -->
-          <div class="mb-3">
+              <!-- mt_square -->
+              <!-- <div class="mb-3">
             <label for="mt_square" class="form-label">Mt. square:</label>
             <input
               type="text"
@@ -260,8 +265,9 @@ export default {
               name="mt_square"
               v-model="mt_square"
             />
+          </div> -->
+            </div>
           </div>
-
           <!-- services -->
           <div
             class="btn-group btn-group-sm my-3"
@@ -287,7 +293,7 @@ export default {
           </div>
 
           <div>
-            <button type="submit" class="btn btn-success me-3">Search</button>
+            <button type="submit" class="btns-search">Search</button>
             <button type="button" class="btn btn-secondary" @click="resetParameters()">
               Reset Params
             </button>
@@ -334,7 +340,11 @@ export default {
                 @click="message(apartment.slug)"
                 >Send a message</a
               >
-              <a href="#" class="">Details</a>
+              <router-link
+                :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                class="btn btn-warning w-50"
+                >Mostra</router-link
+              >
               <!-- </div> -->
             </div>
           </div>
@@ -346,10 +356,36 @@ export default {
   <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
+.box-apartment {
+  display: flex;
+  justify-content: center;
+}
+.btns-search {
+  border-bottom: #36bffa;
+  color: #36bffa;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+.btns-search:hover {
+  color: white;
+  background-color: #36bffa;
+}
 .cursor-pointer {
   cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+  background: none;
+  border: 0.5px solid #36bffa;
+  color: #36bffa;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+.cursor-pointer:hover {
+  background-color: #36bffa;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
 }
 
 .radius-div {
