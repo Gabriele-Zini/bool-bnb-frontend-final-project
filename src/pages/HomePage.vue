@@ -1,17 +1,22 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
+import AppModal from "../components/AppModal.vue";
 
 export default {
   data() {
     return {
       store,
       apartments: [],
+      slug: "",
     };
   },
 
   created() {
     this.fetchData();
+  },
+  components: {
+    AppModal,
   },
   methods: {
     fetchData() {
@@ -26,6 +31,9 @@ export default {
       } else {
         return stringa.substring(0, lunghezzaMassima) + "...";
       }
+    },
+    message(slug) {
+      this.slug = slug;
     },
   },
 };
@@ -85,6 +93,7 @@ export default {
     </div>
   </div>
   <!-- /apartment--card -->
+  <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;

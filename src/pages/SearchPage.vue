@@ -248,7 +248,7 @@ export default {
               <div class="mb-3">
                 <label for="num_beds" class="form-label">Beds Number:</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="num_beds"
                   name="num_beds"
@@ -260,7 +260,7 @@ export default {
               <div class="mb-3">
                 <label for="num_rooms" class="form-label">Rooms Number:</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="num_rooms"
                   name="num_rooms"
@@ -272,7 +272,7 @@ export default {
               <div class="mb-3">
                 <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="num_bathrooms"
                   name="num_bathrooms"
