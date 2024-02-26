@@ -26,6 +26,7 @@ export default {
       filteredApartments: [],
       slug: "",
       params: 0,
+      results: true,
     };
   },
   components: {
@@ -115,15 +116,22 @@ export default {
         }
 
         axios
-          .get(`${this.store.baseUrl}/api/apartments`, {
+          .get(`${this.store.baseUrl}/api/get-apartments`, {
             params: queryParams,
           })
           .then((resp) => {
             this.params = 2;
             console.log(this.params);
-            console.log(resp.data);
+            console.log(resp);
             this.filteredApartments = resp.data.result;
             this.params = 0;
+            if (resp.data.success === false) {
+              this.results = false;
+              console.log(this.results);
+            } else {
+              this.results = true;
+              console.log(this.results);
+            }
           });
       }
     },
@@ -191,7 +199,7 @@ export default {
                     v-model="radius"
                   />
                 </div>
-              </div> 
+              </div>
             </div>
             <!-- radius -->
             <div class="col-4 bro">
@@ -267,28 +275,28 @@ export default {
               v-model="mt_square"
             />
           </div> -->
-          <div
-            class="btn-sm my-3"
-            role="group"
-            aria-label="Basic checkbox toggle button group"
-          >
-            <div class="row g-2">
-              <div class="" v-for="service in services">
-                <input
-                  type="checkbox"
-                  class="btn-check"
-                  :id="service.id"
-                  :name="service.name"
-                  value="1"
-                  autocomplete="off"
-                  @change="updateSelectedServices(service.name)"
-                />
-                <label class="btn btn-outline-dark " :for="service.id">
-                  {{ service.name }}
-                </label>
+              <div
+                class="btn-sm my-3"
+                role="group"
+                aria-label="Basic checkbox toggle button group"
+              >
+                <div class="row g-2">
+                  <div class="" v-for="service in services">
+                    <input
+                      type="checkbox"
+                      class="btn-check"
+                      :id="service.id"
+                      :name="service.name"
+                      value="1"
+                      autocomplete="off"
+                      @change="updateSelectedServices(service.name)"
+                    />
+                    <label class="btn btn-outline-dark" :for="service.id">
+                      {{ service.name }}
+                    </label>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
             </div>
           </div>
           <!-- services -->
@@ -305,7 +313,6 @@ export default {
           <h4>Posizione non trovata</h4>
         </div>
       </div>
-
     </div>
 
     <!-- apartment--card -->
@@ -358,28 +365,35 @@ export default {
 </template>
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
+
 .bro {
-  background-color: #F2F4F7;
-  border: 1px solid #EAECF0;
+  background-color: #f2f4f7;
+  border: 1px solid #eaecf0;
   border-radius: 10px;
-  padding: 20px
+  padding: 20px;
 }
+
 .btnn {
   @include btnn();
 }
+
 .rem {
   @include rem();
 }
+
 .btnn:hover {
   @include hoverBtn();
 }
+
 .rem:hover {
   @include remHover();
 }
+
 .cursor-pointer {
   cursor: pointer;
   @include btnn();
 }
+
 .cursor-pointer:hover {
   @include hoverBtn();
 }
