@@ -30,13 +30,16 @@ export default {
       results: true,
     };
   },
+
   components: {
     AppModal,
   },
+
   mounted() {
     this.fetchServices();
     this.mapInit();
   },
+
   methods: {
     message(slug) {
       this.slug = slug;
@@ -47,6 +50,7 @@ export default {
       const successCallback = (position) => {
         let center = { lat: position.coords.latitude, lng: position.coords.longitude };
 
+        // create map and assign to html element "map"
         let map = tt.map({
           key: "HAMFczyVGd30ClZCfYGP9To9Y18u6eq7",
           container: "map",
@@ -61,6 +65,7 @@ export default {
         //   new tt.Marker({ element: element }).setLngLat(center).addTo(map);
         // });
 
+        // add map options
         let options = {
           searchOptions: {
             key: "HAMFczyVGd30ClZCfYGP9To9Y18u6eq7",
@@ -74,10 +79,11 @@ export default {
           },
         };
 
+        // add map searchbox
         const ttSearchBox = new SearchBox(services, options);
         map.addControl(ttSearchBox, "top-left")
 
-
+        // add placeholder
         ttSearchBox.updateOptions({
           showSearchButton: false,
           labels: {
@@ -89,11 +95,15 @@ export default {
 
         });
 
+        // action after selecting a result from suggested
         ttSearchBox.on("tomtom.searchbox.resultselected", (e) => {
 
+          // assign coordinates to variables handling event results
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
+          this.fetchData();
 
+          // add marker for the current position
           let startPosition = new tt.Marker().setLngLat(e.data.result.position).addTo(map);
           map.flyTo({ center: e.data.result.position });
 
@@ -111,17 +121,11 @@ export default {
           )
           startPosition.setPopup(popup).togglePopup()
 
-          console.log(e.data.result.position, this.latitude, this.longitude);
-          this.fetchData(e);
-
-          if (this.markers.length > 0) {
-
-            console.log('markers fill');
-            this.markers.forEach(marker => {
-              console.log(marker);
-              new tt.Marker().setLngLat(marker.center).addTo(map);
-            });
-
+          console.log(this.markers);
+          for (let i = 0; i < this.markers.length; i++) {
+            const marker = this.markers[i];
+            console.log(marker);
+            new tt.Marker().setLngLat(marker).addTo(map);
           }
         });
 
@@ -132,31 +136,15 @@ export default {
         ttSearchBox.on("tomtom.searchbox.resultscleared", (e) => {
 
         });
-
-        // ttSearchBox.on("tomtom.searchbox.resultselected", (e) => {
-        //   let searchPosition = '';
-        //   this.latitude = e.data.result.position.lat;
-        //   this.longitude = e.data.result.position.lng;
-
-        //   searchPosition = new tt.Marker().setLngLat(e.data.result.position).addTo(map);
-
-        //   map.flyTo({ center: e.data.result.position });
-
-        //   this.fetchData(e);
-        // });
-
-        // ttSearchBox.on("tomtom.searchbox.resultscleared", this.resetPosition);
-        // map.addControl(ttSearchBox, "top-left");
       };
       const errorCallback = (error) => {
         console.log(error);
       };
-
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
 
 
-    fetchData(e) {
+    fetchData() {
       if (!this.latitude && !this.longitude) {
 
         this.params = 1;
@@ -210,7 +198,7 @@ export default {
 
                 console.log(curApartment.center);
 
-                this.markers.push(curApartment);
+                this.markers.push(curApartment.center);
                 console.log(this.markers);
                 this.params = 0;
               });
@@ -219,7 +207,7 @@ export default {
       }
     },
 
-    
+
     fetchServices() {
       axios.get(`${this.store.baseUrl}/api/services`).then((resp) => {
         this.services = resp.data.result;
