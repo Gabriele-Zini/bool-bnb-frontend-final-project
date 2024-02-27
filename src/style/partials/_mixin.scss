@@ -1,4 +1,4 @@
-@mixin btnn($color: #36BFFA,$border: none, $border-bottom: .5px solid #36BFFA, $background: none, $padding: 10px, $border-radius: 10px, $text-decoration: none, $transition: background-color 0.5s ease-in,$colo: 0.4s ease-out) {
+@mixin my_btn_primary($color: #36BFFA,$border: none, $border-bottom: .5px solid #36BFFA, $background: none, $padding: 10px, $border-radius: 10px, $text-decoration: none, $transition: background-color 0.5s ease-in,$colo: 0.4s ease-out) {
     color: $color;
     border: $border;
     border-bottom: $border-bottom;
@@ -9,11 +9,11 @@
     color: $colo;
 }
 
-@mixin hoverBtn($background: #36BFFA, $color: white,) {
+@mixin my_btn_primaryHover ($background: #36BFFA, $color: white,) {
     background-color: $background;
     color: $color;
 }
-@mixin rem($color: #ffc107,$border: none, $border-bottom: .5px solid #ffc107, $background: none, $padding: 10px, $border-radius: 10px, $text-decoration: none, $transition: background-color 0.5s ease-in,$colo: 0.4s ease-out) {
+@mixin my_btn_warning($color: #ffc107,$border: none, $border-bottom: .5px solid #ffc107, $background: none, $padding: 10px, $border-radius: 10px, $text-decoration: none, $transition: background-color 0.5s ease-in,$colo: 0.4s ease-out) {
     color: $color;
     border: $border;
     border-bottom: $border-bottom;
@@ -23,7 +23,7 @@
     transition: $transition;
     color: $colo;
 }
-@mixin remHover($back: #ffc107, $color: white) {
+@mixin my_btn_warningHover($back: #ffc107, $color: white) {
     background-color: $back;
     color: $color;
 }
