@@ -101,6 +101,8 @@ export default {
           // assign coordinates to variables handling event results
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
+
+          // fetching data from backend api
           this.fetchData();
 
           // add marker for the current position
@@ -155,7 +157,7 @@ export default {
 
         this.params = 1;
 
-        return; // Se tutti i parametri sono vuoti, esci dalla funzione senza fare nulla
+        return; // if all parameters empty exit doing nothing
 
       } else {
 
@@ -180,6 +182,7 @@ export default {
           queryParams.mt_square = this.mt_square;
         }
 
+        // else set params for query and start axios call
         axios
           .get(`${this.store.baseUrl}/api/get-apartments`, {
             params: queryParams,
@@ -194,16 +197,16 @@ export default {
 
             } else {
 
+              // cycling filtered results 
                 this.filteredApartments.forEach(apartment => {
                 let curApartment = {
                   'name': apartment.title,
                   'center': [apartment.longitude, apartment.latitude],
                 }
                 
-                console.log(curApartment.center);
-                
+                // pushing into markers array coords and apartment. name necessary for edit markers
                 this.markers.push(curApartment);
-                console.log(this.markers);
+
                 this.params = 0;
 
                 this.results = true;
