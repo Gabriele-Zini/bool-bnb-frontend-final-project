@@ -129,7 +129,7 @@ export default {
           .then((resp) => {
             this.params = 2;
             // console.log(this.params);
-            // console.log(resp);
+             console.log(resp);
             this.filteredApartments = resp.data.result;
             this.params = 0;
             if (resp.data.success === false) {
@@ -333,7 +333,7 @@ export default {
             v-for="apartment in filteredApartments"
             :key="apartment.id"
           >
-            <div class="card" style="height: 30rem">
+            <div class="card" :class="apartment.sponsor? 'border border-warning': ''" style="height: 30rem">
               <div v-for="image in apartment.images">
                 <img
                   v-if="image.cover_image === 1"
