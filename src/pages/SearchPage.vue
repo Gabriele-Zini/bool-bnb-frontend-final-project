@@ -122,10 +122,16 @@ export default {
           startPosition.setPopup(popup).togglePopup()
 
           console.log(this.markers);
-          for (let i = 0; i < this.markers.length; i++) {
-            const marker = this.markers[i];
-            console.log(marker);
-            new tt.Marker().setLngLat(marker).addTo(map);
+          if (this.results === true) {
+            console.log(this.results);
+            for (let i = 0; i < this.markers.length; i++) {
+              const marker = this.markers[i].center;
+              console.log(marker);
+              new tt.Marker().setLngLat(marker).addTo(map).setPopup(new tt.Popup({ offset: popupOffsets }).setHTML(
+            `${this.markers[i].name}`
+          ));
+            }
+
           }
         });
 
@@ -188,19 +194,19 @@ export default {
 
             } else {
 
-              this.results = true;
-
-              this.filteredApartments.forEach(apartment => {
+                this.filteredApartments.forEach(apartment => {
                 let curApartment = {
                   'name': apartment.title,
                   'center': [apartment.longitude, apartment.latitude],
                 }
-
+                
                 console.log(curApartment.center);
-
-                this.markers.push(curApartment.center);
+                
+                this.markers.push(curApartment);
                 console.log(this.markers);
                 this.params = 0;
+
+                this.results = true;
               });
             }
           })
