@@ -31,7 +31,7 @@ export default {
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
                 <h2 class="mb-5 text-center"> {{ apartment.title }} </h2>
-                <div class="cardss d-flex flex-wrap justify-content-center gap-2 border-bottom pb-5 rounded">
+                <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
                     <div v-for="image in apartment.images">
                         <img class="rounded" v-if="apartment.images.length === 0" :src="getImage('no_Image_Available.jpg')"
                             :alt="apartment.title">
@@ -43,10 +43,10 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="cards text-center border-bottom w-100 pb-4 ">
+                <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
                     <div class="my_column">
-                        <h4 class="text-center pt-3">Caratterische</h4>
-                        <ul class="list">
+                        <h4 class="text-center pt-3 my_text">Caratterische</h4>
+                        <ul class="">
                             <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
                                 apartment.apartment_info.mt_square }} </li>
                             <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
@@ -67,7 +67,7 @@ export default {
                         <!-- button to sand messages to apartment -->
 
 
-                        <a href="#" class="my_btn_warning" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             @click="message(apartment.slug)">Send a message</a>
 
 
@@ -107,6 +107,19 @@ export default {
     border: 1px solid #EAECF0;
     border-radius: 10px;
     padding: 3rem;
+
+    .my_text{
+        padding: 0 0 0 2rem;
+    }
+
+  ul li {
+    margin: 0.5rem;
+    list-style-type: none;
+  }
+
+  .my_btn {
+    margin: 0 0 0 1.5rem;
+  }
     
 }
 
