@@ -4,17 +4,31 @@ import axios from 'axios';
 import { store } from '../store';
 import AppModal from "../components/AppModal.vue";
 export default {
+
+    props: {
+        slug: String,
+    },
+
     data() {
         return {
             store,
             apartment: {},
-            loading: false
+            loading: false,
+            slug: "",
+            error: "",
+            checkError: false,
+            messageSucces: false,
         };
     },
 
     components: {
-    AppModal,
-  },
+        AppModal,
+    },
+    methods: {
+    message(slug) {
+      this.slug = slug;
+    }},
+
 
     created() {
         axios.get(`${this.store.baseUrl}/api/apartments/${this.$route.params.slug}`).then((resp) => {
@@ -60,10 +74,11 @@ export default {
                                     apartment.postal_code }}, {{ apartment.city }} ({{ apartment.country }})</li>
                             <li><strong>Services: </strong>
                                 <p class="d-inline" v-for="(service, index) in apartment.services" :key="service.index">{{
-                                    index > 0 ? ', ' : '' }}{{ service.name }}{{ index == apartment.services.length - 1 ? '.' : '' }}</p>
+                                    index > 0 ? ', ' : '' }}{{ service.name }}{{ index == apartment.services.length - 1 ?
+        '.' : '' }}</p>
                             </li>
                         </ul>
-                        
+
                         <!-- button to sand messages to apartment -->
 
 
@@ -108,19 +123,19 @@ export default {
     border-radius: 10px;
     padding: 3rem;
 
-    .my_text{
+    .my_text {
         padding: 0 0 0 2rem;
     }
 
-  ul li {
-    margin: 0.5rem;
-    list-style-type: none;
-  }
+    ul li {
+        margin: 0.5rem;
+        list-style-type: none;
+    }
 
-  .my_btn {
-    margin: 0 0 0 1.5rem;
-  }
-    
+    .my_btn {
+        margin: 0 0 0 1.5rem;
+    }
+
 }
 
 .list {
