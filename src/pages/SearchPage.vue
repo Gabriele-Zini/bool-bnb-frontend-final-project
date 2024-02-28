@@ -129,7 +129,7 @@ export default {
           .then((resp) => {
             this.params = 2;
             // console.log(this.params);
-             console.log(resp);
+            console.log(resp);
             this.filteredApartments = resp.data.result;
             this.params = 0;
             if (resp.data.success === false) {
@@ -288,40 +288,38 @@ export default {
       <div class="col-md-10">
         <div class="row">
 
-          <div
-            class="col-12 col-md-6 col-lg-3 mb-4"
-            v-for="apartment in filteredApartments"
-            :key="apartment.id"
-          >
-            <div class="card" :class="apartment.sponsor? 'border border-warning': ''" style="height: 30rem">
-
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
-            <div class="card" style="height: 30rem">
+            <div class="card" :class="apartment.sponsor ? 'border border-warning' : ''" style="height: 30rem">
 
-              <div v-for="image in apartment.images">
-                <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                  alt="" class="card-img-top" />
-              </div>
+              <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
+                <div class="card" style="height: 30rem">
 
-              <div class="card-body">
-                <h5 class="card-title mt-2 fs-6">
-                  {{ truncateString(apartment.title, 15) }}
-                </h5>
-                <p class="m-0 p-0">
-                  {{ apartment.street_name }} {{ apartment.street_number }}
-                </p>
-                <p class="mb-3 p-0">{{ apartment.city }}</p>
+                  <div v-for="image in apartment.images">
+                    <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                      alt="" class="card-img-top" />
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title mt-2 fs-6">
+                      {{ truncateString(apartment.title, 15) }}
+                    </h5>
+                    <p class="m-0 p-0">
+                      {{ apartment.street_name }} {{ apartment.street_number }}
+                    </p>
+                    <p class="mb-3 p-0">{{ apartment.city }}</p>
 
 
-                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                  class="my_btn_primary">Mostra</router-link>
+                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                      class="my_btn_primary">Mostra</router-link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- /apartment--card -->
       </div>
     </div>
-    <!-- /apartment--card -->
   </div>
   <AppModal :slug="slug" />
 </template>
