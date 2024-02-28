@@ -28,6 +28,7 @@ export default {
       slug: "",
       params: 0,
       results: true,
+      markersIcons: []
     };
   },
 
@@ -107,6 +108,7 @@ export default {
 
           // add marker for the current position
           let startPosition = new tt.Marker().setLngLat(e.data.result.position).addTo(map);
+          this.markersIcons.push(startPosition)
           map.flyTo({ center: e.data.result.position });
 
           const popupOffsets = {
@@ -123,18 +125,20 @@ export default {
           )
           startPosition.setPopup(popup).togglePopup()
 
-          console.log(this.markers);
-          if (this.results === true) {
-            console.log(this.results);
-            for (let i = 0; i < this.markers.length; i++) {
-              const marker = this.markers[i].center;
-              console.log(marker);
-              new tt.Marker().setLngLat(marker).addTo(map).setPopup(new tt.Popup({ offset: popupOffsets }).setHTML(
-            `${this.markers[i].name}`
-          ));
-            }
 
-          }
+          // MARKERS NOT IMPLEMENTED
+          // console.log(this.markers);
+          // if (this.results === true) {
+          //   console.log(this.results);
+          //   for (let i = 0; i < this.markers.length; i++) {
+          //     const marker = this.markers[i].center;
+          //     console.log(marker);
+          //     this.markersIcons.push(new tt.Marker().setLngLat(marker).addTo(map).setPopup(new tt.Popup({ offset: popupOffsets }).setHTML(
+          //       `${this.markers[i].name}`
+          //     )));
+          //   }
+
+          // }
         });
 
         ttSearchBox.on("tomtom.searchbox.resultfocused", (e) => {
@@ -142,7 +146,15 @@ export default {
         });
 
         ttSearchBox.on("tomtom.searchbox.resultscleared", (e) => {
-
+          this.resetPosition();
+          // Rimuovere i marker precedenti dalla mappa
+          for (let i = 0; i < this.markersIcons.length; i++) {
+            this.markersIcons[i].remove();
+          }
+          // Svuotare l'array markersIcons e markers
+          this.markersIcons = [];
+          this.markers = [];
+          // else set params
         });
       };
       const errorCallback = (error) => {
@@ -182,6 +194,13 @@ export default {
           queryParams.mt_square = this.mt_square;
         }
 
+        // Rimuovere i marker precedenti dalla mappa
+        for (let i = 0; i < this.markersIcons.length; i++) {
+          this.markersIcons[i].remove();
+        }
+        // Svuotare l'array markersIcons e markers
+        this.markersIcons = [];
+        this.markers = [];
         // else set params for query and start axios call
         axios
           .get(`${this.store.baseUrl}/api/get-apartments`, {
@@ -189,6 +208,7 @@ export default {
           })
           .then((resp) => {
             this.params = 2;
+
             this.filteredApartments = resp.data.result;
 
             if (resp.data.success === false) {
@@ -197,20 +217,22 @@ export default {
 
             } else {
 
-              // cycling filtered results 
-                this.filteredApartments.forEach(apartment => {
-                let curApartment = {
-                  'name': apartment.title,
-                  'center': [apartment.longitude, apartment.latitude],
-                }
-                
-                // pushing into markers array coords and apartment. name necessary for edit markers
-                this.markers.push(curApartment);
+              // cycling filtered results NOT IMPLEMENTED
+              // this.filteredApartments.forEach(apartment => {
+              //   let curApartment = {
+              //     'name': apartment.title,
+              //     'center': [apartment.longitude, apartment.latitude],
+              //   }
 
-                this.params = 0;
 
-                this.results = true;
-              });
+              // pushing into markers array coords and apartment. name necessary for edit markers
+              // this.markers.push(curApartment);
+              // });
+
+
+              this.params = 0;
+
+              this.results = true;
             }
           })
       }
