@@ -291,9 +291,6 @@ export default {
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
             <div class="card" :class="apartment.sponsor ? 'border border-warning' : ''" style="height: 30rem">
 
-              <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
-                <div class="card" style="height: 30rem">
-
                   <div v-for="image in apartment.images">
                     <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
                       alt="" class="card-img-top" />
@@ -319,8 +316,7 @@ export default {
         </div>
         <!-- /apartment--card -->
       </div>
-    </div>
-  </div>
+    
   <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
