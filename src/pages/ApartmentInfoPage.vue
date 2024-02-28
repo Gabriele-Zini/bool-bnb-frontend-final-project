@@ -7,7 +7,8 @@ export default {
         return {
             store,
             apartment: {},
-            loading: false
+            loading: false,
+
         };
     },
     created() {
@@ -15,6 +16,12 @@ export default {
             console.log(resp.data.result);
             this.loading = true;
             this.apartment = resp.data.result;
+        })
+        axios.get('https://api.db-ip.com/v2/free/self').then(resp=> {
+           console.log(resp.data.ipAddress)
+        })
+        axios.get('https://api.ipify.org?format=json').then(resp=> {
+           console.log(resp)
         })
     }
 
