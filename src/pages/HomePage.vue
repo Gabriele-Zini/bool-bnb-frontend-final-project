@@ -72,17 +72,10 @@ export default {
               </p>
               <p class="m-0 p-0">{{ apartment.city }}</p>
 
-              <a
-                href="#"
-                class="btnn"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="message(apartment.slug)"
-                >Send a message</a
-              >
+             
               <router-link
                 :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="rem"
+                class="my_btn_primary mt-1"
                 >Mostra</router-link
               >
               <!-- </div> -->
@@ -104,12 +97,14 @@ export default {
   background-size: cover;
   background-position: center;
   height: 500px;
+  
 
   .title {
     display: flex;
     justify-content: center;
     height: 100%;
     align-items: center;
+    
     h1 {
       font-size: 6.5rem;
       color: white;
