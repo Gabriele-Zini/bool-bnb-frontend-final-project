@@ -208,6 +208,8 @@ export default {
           })
           .then((resp) => {
             this.params = 2;
+            // console.log(this.params);
+            console.log(resp);
 
             this.filteredApartments = resp.data.result;
 
@@ -310,16 +312,23 @@ export default {
                 reset position
               </button> -->
 
+
+              <!-- Radius on search map -->
+
               <div class="my-3 radius">
-                <a class="cursor-pointer" v-on:click="toggleRadius">set radius &DownArrow;</a>
+                <a class="my_btn_primary" v-on:click="toggleRadius">set radius &DownArrow;</a>
+
                 <div class="mb-3 mt-4 radius-div w-50" :class="{ 'd-none': !showRadius }">
                   <label for="raiuds" class="form-label">Radius in km:</label>
                   <input type="number" class="form-control" id="raiuds" name="raiuds" v-model="radius" />
                 </div>
               </div>
             </div>
+
             <!-- radius -->
-            <div class="col-4 bro">
+            <div class="col-4 my_column">
+
+
               <!-- latitude -->
               <div class="mb-3 d-none">
                 <label for="latitude" class="form-label">Latitude:</label>
@@ -368,8 +377,8 @@ export default {
           <!-- services -->
 
           <div>
-            <button type="submit" class="btnn me-2">Search</button>
-            <button type="button" class="rem" @click="resetParameters()">
+            <button type="submit" class="my_btn_primary me-2">Search</button>
+            <button type="button" class="my_btn_warning" @click="resetParameters()">
               Reset Params
             </button>
           </div>
@@ -390,52 +399,56 @@ export default {
       <div class="col-md-10">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
-            <div class="card" style="height: 30rem">
-              <div v-for="image in apartment.images">
-                <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                  alt="" class="card-img-top" />
-              </div>
-              <!-- <div class="card-body"> -->
-              <h5 class="card-title mt-2 fs-6">
-                {{ truncateString(apartment.title, 15) }}
-              </h5>
-              <p class="m-0 p-0">
-                {{ apartment.street_name }} {{ apartment.street_number }}
-              </p>
-              <p class="m-0 p-0">{{ apartment.city }}</p>
+            <div class="card" :class="apartment.sponsor ? 'border border-warning' : ''" style="height: 30rem">
 
-              <a href="#" class="btnn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                @click="message(apartment.slug)">Send a message</a>
-              <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="rem">Mostra</router-link>
-              <!-- </div> -->
+                  <div v-for="image in apartment.images">
+                    <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                      alt="" class="card-img-top" />
+                  </div>
+
+                  <div class="card-body">
+                    <h5 class="card-title mt-2 fs-6">
+                      {{ truncateString(apartment.title, 15) }}
+                    </h5>
+                    <p class="m-0 p-0">
+                      {{ apartment.street_name }} {{ apartment.street_number }}
+                    </p>
+                    <p class="mb-3 p-0">{{ apartment.city }}</p>
+
+
+                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                      class="my_btn_primary"  target="_blank">Mostra</router-link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <!-- /apartment--card -->
       </div>
-    </div>
-    <!-- /apartment--card -->
-  </div>
+    
   <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
-
-.bro {
-  background-color: #f2f4f7;
-  border: 1px solid #eaecf0;
+.container-fluid {
+  padding-top: 100px;
+}
+.my_column {
+  background-color: #F2F4F7;
+  border: 1px solid #F2F4F7;
   border-radius: 10px;
   padding: 20px;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-  @include btnn();
-}
+// .cursor-pointer {
+//   cursor: pointer;
+//   @include my_btn_primary();
+// }
 
-.cursor-pointer:hover {
-  @include hoverBtn();
-}
+// .cursor-pointer:hover {
+//   @include my_btn_primaryHover();
+// }
 
 .radius-div {
   transition: opacity 1s ease;

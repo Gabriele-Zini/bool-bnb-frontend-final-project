@@ -63,28 +63,19 @@ export default {
                 alt=""
                 class="card-img-top"
               />
-              <!-- <div class="card-body"> -->
-              <h5 class="card-title mt-2 fs-6">
-                {{ truncateString(apartment.title, 15) }}
-              </h5>
-              <p class="m-0 p-0">
-                {{ apartment.street_name }} {{ apartment.street_number }}
-              </p>
-              <p class="m-0 p-0">{{ apartment.city }}</p>
+              <div class="card-body">
+                    <h5 class="card-title mt-2 fs-6">
+                      {{ truncateString(apartment.title, 15) }}
+                    </h5>
+                    <p class="m-0 p-0">
+                      {{ apartment.street_name }} {{ apartment.street_number }}
+                    </p>
+                    <p class="mb-3 p-0">{{ apartment.city }}</p>
 
-              <a
-                href="#"
-                class="btnn"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                @click="message(apartment.slug)"
-                >Send a message</a
-              >
-              <router-link
-                :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="rem"
-                >Mostra</router-link
-              >
+
+                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                      class="my_btn_primary"  target="_blank">Mostra</router-link>
+                </div>
               <!-- </div> -->
             </div>
           </div>
@@ -110,11 +101,21 @@ export default {
     justify-content: center;
     height: 100%;
     align-items: center;
+    
     h1 {
       font-size: 6.5rem;
       color: white;
       text-shadow: 4px 4px 6px black;
     }
   }
+
+
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 5px;
 }
 </style>
