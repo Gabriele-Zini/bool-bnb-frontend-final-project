@@ -63,21 +63,19 @@ export default {
                 alt=""
                 class="card-img-top"
               />
-              <!-- <div class="card-body"> -->
-              <h5 class="card-title mt-2 fs-6">
-                {{ truncateString(apartment.title, 15) }}
-              </h5>
-              <p class="m-0 p-0">
-                {{ apartment.street_name }} {{ apartment.street_number }}
-              </p>
-              <p class="m-0 p-0">{{ apartment.city }}</p>
+              <div class="card-body">
+                    <h5 class="card-title mt-2 fs-6">
+                      {{ truncateString(apartment.title, 15) }}
+                    </h5>
+                    <p class="m-0 p-0">
+                      {{ apartment.street_name }} {{ apartment.street_number }}
+                    </p>
+                    <p class="mb-3 p-0">{{ apartment.city }}</p>
 
-             
-              <router-link
-                :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                class="my_btn_primary mt-1"
-                >Mostra</router-link
-              >
+
+                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+                      class="my_btn_primary">Mostra</router-link>
+                </div>
               <!-- </div> -->
             </div>
           </div>
@@ -97,7 +95,6 @@ export default {
   background-size: cover;
   background-position: center;
   height: 500px;
-  
 
   .title {
     display: flex;
@@ -111,5 +108,14 @@ export default {
       text-shadow: 4px 4px 6px black;
     }
   }
+
+
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 5px;
 }
 </style>
