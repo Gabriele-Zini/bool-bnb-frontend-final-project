@@ -77,8 +77,6 @@ export default {
     <div class="container-fluid d-flex justify-content-center  mt-5">
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
-                <h2 class="mb-5 text-center"> {{ apartment.title }} </h2>
-                <div class="cardss d-flex flex-wrap justify-content-center gap-2 border-bottom pb-5 rounded">
                     <h4 class="mb-5 text-center fs-2"> {{ apartment.title }} </h4>
                     <div v-if="checkCoverImage === true && images === true">
                         <h4 class="text-center fs-3">Cover Image</h4>
@@ -111,10 +109,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <div class="cards text-center border-bottom w-50  pb-4 ">
                         <div class="bro">
-                            <h4 class="text-center pt-3">Caratterische</h4>
-                            <ul class="list">
                                 <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
                                     <div class="my_column">
                                         <h4 class="text-center pt-3 my_text">Caratterische</h4>
@@ -160,12 +155,9 @@ export default {
                                     <div>
                                     </div>
                                 </div>
-                            </ul>
                         </div>
 
 
-                    </div>
-                </div>
 
                 <AppModal :slug="slug" />
             </div>
