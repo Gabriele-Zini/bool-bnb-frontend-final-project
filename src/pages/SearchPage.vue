@@ -399,8 +399,8 @@ export default {
       <div class="col-md-10">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
-            <div class="card" :class="apartment.sponsor ? 'border border-warning' : ''" style="height: 30rem">
-
+            <div class="card position-relative ms_shadow" :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
+              <i v-if="apartment.sponsor" class="fa-regular fa-gem ms_icon-sponsored"></i>
                   <div v-for="image in apartment.images">
                     <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
                       alt="" class="card-img-top" />

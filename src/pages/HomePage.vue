@@ -57,7 +57,8 @@ export default {
             v-for="apartment in apartments"
             :key="apartment.id"
           >
-            <div class="card" style="height: 30rem">
+            <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
+              <i class="fa-regular fa-gem ms_icon-sponsored"></i>
               <img
                 :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`"
                 alt=""
@@ -89,6 +90,8 @@ export default {
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 
 .container-fluid {
   background-image: url(../assets/img/interior-home.jpg);

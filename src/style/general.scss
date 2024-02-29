@@ -16,3 +16,20 @@ body {
 form,input,label,h4 {
     @include p_color;
 }
+
+.ms_icon-sponsored {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 7px;
+    right: 7px;
+    color: #0dcaf0;
+    filter: drop-shadow(2px 3px 2px #0dcaf0);
+}
+
+.ms_shadow {
+    box-shadow: 3px 20px 20px 3px #ccc;
+}
+
+.ms_shadow-sponsored {
+    box-shadow: 3px 10px 10px 3px rgba($color: #0dcaf0, $alpha: .4);
+}
