@@ -321,10 +321,12 @@ export default {
 </template>
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
-
+.container-fluid {
+  padding-top: 100px;
+}
 .my_column {
-  background-color: #eaecf0;
-  border: 1px solid #eaecf0;
+  background-color: #F2F4F7;
+  border: 1px solid #F2F4F7;
   border-radius: 10px;
   padding: 20px;
 }
