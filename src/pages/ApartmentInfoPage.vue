@@ -14,6 +14,8 @@ export default {
             store,
             apartment: {},
             loading: false,
+            ip: null,
+            apartment_id:undefined,
             slug: "",
             error: "",
             checkError: false,
@@ -38,6 +40,19 @@ export default {
             console.log(resp.data.result.images);
             this.loading = true;
             this.apartment = resp.data.result;
+            this.apartment_id=resp.data.result.id
+            
+            axios.get('https://api.db-ip.com/v2/free/self').then(resp => {
+                // console.log(resp.data.ipAddress)
+                this.ip = resp.data.ipAddress;
+                console.log(this.apartment_id)
+                console.log(this.ip)
+                const params={
+                    user_ip:this.ip,
+                    apartment_id: this.apartment_id
+                }
+                axios.post(`${this.store.baseUrl}/api/get-view`, params )
+        })
             let images = resp.data.result.images
             if (images.length === 0) {
                 this.images = false;
@@ -51,6 +66,9 @@ export default {
                 }
             }
         })
+        /* axios.get('https://api.ipify.org?format=json').then(resp => {
+            console.log(resp.data.ip)
+        }) */
     }
 
 }
@@ -59,6 +77,8 @@ export default {
     <div class="container-fluid d-flex justify-content-center  mt-5">
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
+                <h2 class="mb-5 text-center"> {{ apartment.title }} </h2>
+                <div class="cardss d-flex flex-wrap justify-content-center gap-2 border-bottom pb-5 rounded">
                 <h4 class="mb-5 text-center fs-2"> {{ apartment.title }} </h4>
                 <div v-if="checkCoverImage === true && images === true">
                     <h4 class="text-center fs-3">Cover Image</h4>
@@ -78,11 +98,13 @@ export default {
                 </div>
                 <h4 v-if="images" class="text-center">Gallery</h4>
                 <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
+
                     <div v-for="image in apartment.images">
                         <img class="rounded" v-if="apartment.images.length === 0" :src="getImage('no_Image_Available.jpg')"
                             :alt="apartment.title">
                         <div v-else class="">
                             <div class="">
+                                <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
                                 <img v-if="image.cover_image !== 1"
                                     :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
                                     :alt="apartment.title">
@@ -90,10 +112,15 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
+                <div class="cards text-center border-bottom w-50  pb-4 ">
+                    <div class="bro">
+                        <h4 class="text-center pt-3">Caratterische</h4>
+                        <ul class="list">
+                 <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
                     <div class="my_column">
                         <h4 class="text-center pt-3 my_text">Caratterische</h4>
                         <ul class="">
+
                             <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
                                 apartment.apartment_info.mt_square }} </li>
                             <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
@@ -112,11 +139,13 @@ export default {
                             </li>
                         </ul>
 
+
                         <!-- button to sand messages to apartment -->
 
 
                         <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             @click="message(apartment.slug)">Send a message</a>
+
 
 
 
@@ -149,6 +178,7 @@ export default {
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
 @use "../style/partials/variables" as *;
+
 
 .my_column {
     background-color: #EAECF0;

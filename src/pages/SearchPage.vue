@@ -24,26 +24,34 @@ export default {
       selectedServices: [],
       apartmentInfo: {},
       filteredApartments: [],
+      markers: [],
       slug: "",
       params: 0,
       results: true,
+      markersIcons: []
     };
   },
+
   components: {
     AppModal,
   },
+
   mounted() {
-    this.mapInit();
     this.fetchServices();
+    this.mapInit();
   },
+
   methods: {
     message(slug) {
       this.slug = slug;
     },
+
+
     mapInit() {
       const successCallback = (position) => {
         let center = { lat: position.coords.latitude, lng: position.coords.longitude };
 
+        // create map and assign to html element "map"
         let map = tt.map({
           key: "HAMFczyVGd30ClZCfYGP9To9Y18u6eq7",
           container: "map",
@@ -51,13 +59,14 @@ export default {
           zoom: 10,
         });
 
-        map.on("load", () => {
-          let element = document.createElement("div");
-          element.id = "marker";
-          element.innerHTML = "125$";
-          new tt.Marker({ element: element }).setLngLat(center).addTo(map);
-        });
+        // map.on("load", () => {
+        //   let element = document.createElement("div");
+        //   element.id = "marker";
+        //   element.innerHTML = "125$";
+        //   new tt.Marker({ element: element }).setLngLat(center).addTo(map);
+        // });
 
+        // add map options
         let options = {
           searchOptions: {
             key: "HAMFczyVGd30ClZCfYGP9To9Y18u6eq7",
@@ -71,8 +80,11 @@ export default {
           },
         };
 
+        // add map searchbox
         const ttSearchBox = new SearchBox(services, options);
+        map.addControl(ttSearchBox, "top-left")
 
+        // add placeholder
         ttSearchBox.updateOptions({
           showSearchButton: false,
           labels: {
@@ -80,27 +92,87 @@ export default {
           },
         });
 
+        ttSearchBox.on("tomtom.searchbox.resultsfound", (e) => {
+
+        });
+
+        // action after selecting a result from suggested
         ttSearchBox.on("tomtom.searchbox.resultselected", (e) => {
-          map.flyTo({ center: e.data.result.position });
-          // console.log(e.data.result.position);
+
+          // assign coordinates to variables handling event results
           this.latitude = e.data.result.position.lat;
           this.longitude = e.data.result.position.lng;
+
+          // fetching data from backend api
+          this.fetchData();
+
+          // add marker for the current position
+          let startPosition = new tt.Marker().setLngLat(e.data.result.position).addTo(map);
+          this.markersIcons.push(startPosition)
+          map.flyTo({ center: e.data.result.position });
+
+          const popupOffsets = {
+            top: [0, 0],
+            bottom: [0, -70],
+            "bottom-right": [0, -70],
+            "bottom-left": [0, -70],
+            left: [25, -35],
+            right: [-25, -35],
+          }
+
+          const popup = new tt.Popup({ offset: popupOffsets }).setHTML(
+            "start position"
+          )
+          startPosition.setPopup(popup).togglePopup()
+
+
+          // MARKERS NOT IMPLEMENTED
+          // console.log(this.markers);
+          // if (this.results === true) {
+          //   console.log(this.results);
+          //   for (let i = 0; i < this.markers.length; i++) {
+          //     const marker = this.markers[i].center;
+          //     console.log(marker);
+          //     this.markersIcons.push(new tt.Marker().setLngLat(marker).addTo(map).setPopup(new tt.Popup({ offset: popupOffsets }).setHTML(
+          //       `${this.markers[i].name}`
+          //     )));
+          //   }
+
+          // }
         });
-        ttSearchBox.on("tomtom.searchbox.resultscleared", this.resetPosition);
-        map.addControl(ttSearchBox, "top-left");
+
+        ttSearchBox.on("tomtom.searchbox.resultfocused", (e) => {
+
+        });
+
+        ttSearchBox.on("tomtom.searchbox.resultscleared", (e) => {
+          this.resetPosition();
+          // Rimuovere i marker precedenti dalla mappa
+          for (let i = 0; i < this.markersIcons.length; i++) {
+            this.markersIcons[i].remove();
+          }
+          // Svuotare l'array markersIcons e markers
+          this.markersIcons = [];
+          this.markers = [];
+          // else set params
+        });
       };
       const errorCallback = (error) => {
         console.log(error);
       };
-
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     },
+
+
     fetchData() {
       if (!this.latitude && !this.longitude) {
+
         this.params = 1;
-        // Se tutti i parametri sono vuoti, esci dalla funzione senza fare nulla
-        return;
+
+        return; // if all parameters empty exit doing nothing
+
       } else {
+
         this.params = 2;
         const queryParams = {
           latitude: this.latitude,
@@ -122,6 +194,14 @@ export default {
           queryParams.mt_square = this.mt_square;
         }
 
+        // Rimuovere i marker precedenti dalla mappa
+        for (let i = 0; i < this.markersIcons.length; i++) {
+          this.markersIcons[i].remove();
+        }
+        // Svuotare l'array markersIcons e markers
+        this.markersIcons = [];
+        this.markers = [];
+        // else set params for query and start axios call
         axios
           .get(`${this.store.baseUrl}/api/get-apartments`, {
             params: queryParams,
@@ -130,23 +210,44 @@ export default {
             this.params = 2;
             // console.log(this.params);
             console.log(resp);
+
             this.filteredApartments = resp.data.result;
-            this.params = 0;
+
             if (resp.data.success === false) {
+
               this.results = false;
-              // console.log(this.results);
+
             } else {
+
+              // cycling filtered results NOT IMPLEMENTED
+              // this.filteredApartments.forEach(apartment => {
+              //   let curApartment = {
+              //     'name': apartment.title,
+              //     'center': [apartment.longitude, apartment.latitude],
+              //   }
+
+
+              // pushing into markers array coords and apartment. name necessary for edit markers
+              // this.markers.push(curApartment);
+              // });
+
+
+              this.params = 0;
+
               this.results = true;
-              // console.log(this.results);
             }
-          });
+          })
       }
     },
+
+
     fetchServices() {
       axios.get(`${this.store.baseUrl}/api/services`).then((resp) => {
         this.services = resp.data.result;
       });
     },
+
+
     updateSelectedServices(serviceName) {
       if (this.selectedServices.includes(serviceName)) {
         this.selectedServices = this.selectedServices.filter((id) => id !== serviceName);
@@ -154,15 +255,21 @@ export default {
         this.selectedServices.push(serviceName);
       }
     },
+
+
     toggleRadius() {
       this.showRadius = !this.showRadius;
     },
+
+
     resetPosition() {
       const searchBox = document.querySelector(".tt-search-box");
       searchBox.querySelector("input").value = "";
       (this.radius = 20), (this.latitude = "");
       this.longitude = "";
     },
+
+
     resetParameters() {
       const searchBox = document.querySelector(".tt-search-box");
       searchBox.querySelector("input").value = "";
@@ -173,9 +280,13 @@ export default {
       this.num_bathrooms = "";
       this.mt_square = "";
     },
+
+
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
+
+
     truncateString(stringa, lunghezzaMassima) {
       if (stringa.length <= lunghezzaMassima) {
         return stringa;
@@ -287,7 +398,6 @@ export default {
     <div class="row justify-content-center my-5" v-if="params !== 1">
       <div class="col-md-10">
         <div class="row">
-
           <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
             <div class="card" :class="apartment.sponsor ? 'border border-warning' : ''" style="height: 30rem">
 
