@@ -18,6 +18,8 @@ export default {
             error: "",
             checkError: false,
             messageSucces: false,
+            checkCoverImage: false,
+            images: true,
         };
     },
 
@@ -25,16 +27,29 @@ export default {
         AppModal,
     },
     methods: {
-    message(slug) {
-      this.slug = slug;
-    }},
+        message(slug) {
+            this.slug = slug;
+        }
+    },
 
 
     created() {
         axios.get(`${this.store.baseUrl}/api/apartments/${this.$route.params.slug}`).then((resp) => {
-            console.log(resp.data.result);
+            console.log(resp.data.result.images);
             this.loading = true;
             this.apartment = resp.data.result;
+            let images = resp.data.result.images
+            if (images.length === 0) {
+                this.images = false;
+            }
+            for (let i = 0; i < images.length; i++) {
+
+
+                if (images[i].cover_image === 1) {
+                    this.checkCoverImage = true;
+                    console.log(this.checkCoverImage)
+                }
+            }
         })
     }
 
@@ -44,14 +59,32 @@ export default {
     <div class="container-fluid d-flex justify-content-center  mt-5">
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
-                <h2 class="mb-5 text-center"> {{ apartment.title }} </h2>
+                <h4 class="mb-5 text-center fs-2"> {{ apartment.title }} </h4>
+                <div v-if="checkCoverImage === true && images === true">
+                    <h4 class="text-center fs-3">Cover Image</h4>
+                    <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
+                        <div v-for="image in apartment.images">
+                            <img class="rounded" v-if="apartment.images.length === 0"
+                                :src="getImage('no_Image_Available.jpg')" :alt="apartment.title">
+                            <div v-else class="">
+                                <div class="">
+                                    <img v-if="image.cover_image === 1"
+                                        :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                                        class="border rounded" :alt="apartment.title">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 v-if="images" class="text-center">Gallery</h4>
                 <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
                     <div v-for="image in apartment.images">
                         <img class="rounded" v-if="apartment.images.length === 0" :src="getImage('no_Image_Available.jpg')"
                             :alt="apartment.title">
                         <div v-else class="">
                             <div class="">
-                                <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
+                                <img v-if="image.cover_image !== 1"
+                                    :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
                                     :alt="apartment.title">
                             </div>
                         </div>
