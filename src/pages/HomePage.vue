@@ -43,7 +43,8 @@ export default {
       this.fetchData();
       window.scrollTo({
       top: 400,
-      behavior: "smooth"
+      behavior: "smooth",
+      duration:1000
     });
     },
   },
