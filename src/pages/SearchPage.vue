@@ -300,18 +300,18 @@ export default {
 
 <template>
   <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center flex-column">
+
       <!-- form to request data -->
-      <div class="col-xl-10 col-md-10 col-ms-12 border-bottom pb-4">
+      <div class="col-12 col-md-10 border-bottom pb-4 mx-auto">
         <h4 class="p-4">Select a position:</h4>
         <form @submit.prevent="fetchData()" action="" method="GET">
-          <div class="row">
-            <div class="col-8">
-              <div class="map form-control" id="map"></div>
-              <!-- <button class="btnn" @click="resetPosition()">
-                reset position
-              </button> -->
 
+          <div class="row flex-column flex-md-row">
+
+            <!-- map -->
+            <div class="col-11 col-md-9 col-lg-6 mx-auto">
+              <div class="map form-control" id="map"></div>
 
               <!-- Radius on search map -->
 
@@ -322,25 +322,23 @@ export default {
                   <label for="raiuds" class="form-label">Radius in km:</label>
                   <input type="number" class="form-control" id="raiuds" name="raiuds" v-model="radius" />
                 </div>
+
+                <!-- latitude -->
+                <div class="mb-3 d-none">
+                  <label for="latitude" class="form-label">Latitude:</label>
+                  <input type="text" class="form-control" id="latitude" name="latitude" v-model="latitude" />
+                </div>
+                <!-- longitude -->
+                <div class="mb-3 d-none">
+                  <label for="longitude" class="form-label">Longitude:</label>
+                  <input type="text" class="form-control" id="longitude" name="longitude" v-model="longitude" />
+                </div>
+
               </div>
             </div>
 
-            <!-- radius -->
-            <div class="col-4 my_column">
-
-
-              <!-- latitude -->
-              <div class="mb-3 d-none">
-                <label for="latitude" class="form-label">Latitude:</label>
-                <input type="text" class="form-control" id="latitude" name="latitude" v-model="latitude" />
-              </div>
-              <!-- longitude -->
-              <div class="mb-3 d-none">
-                <label for="longitude" class="form-label">Longitude:</label>
-                <input type="text" class="form-control" id="longitude" name="longitude" v-model="longitude" />
-              </div>
-
-              <!-- APARTMENT INFOS -->
+            <!-- APARTMENT INFOS -->
+            <div class="col-11 col-md-9 col-lg-6 mx-auto">
 
               <!-- num bed -->
               <div class="mb-3">
@@ -373,8 +371,9 @@ export default {
                 </div>
               </div>
             </div>
+
           </div>
-          <!-- services -->
+
 
           <div>
             <button type="submit" class="my_btn_primary me-2">Search</button>
@@ -392,48 +391,55 @@ export default {
           <h4>No apartments found</h4>
         </div>
       </div>
-    </div>
 
-    <!-- apartment--card -->
-    <div class="row justify-content-center my-5" v-if="params !== 1">
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in filteredApartments" :key="apartment.id">
-            <div class="card position-relative ms_shadow" :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
+      <!-- apartment--card -->
+      <div class="col-12 col-md-10 g-5 mx-auto" v-if="params !== 1">
+
+        <div class="row justify-content-center flex-column flex-sm-row">
+
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
+
+            <div class="card position-relative ms_shadow"
+              :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
               <i v-if="apartment.sponsor" class="fa-regular fa-gem ms_icon-sponsored"></i>
-                  <div v-for="image in apartment.images">
-                    <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                      alt="" class="card-img-top" />
-                  </div>
+              <div v-for="image in apartment.images">
+                <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                  alt="" class="card-img-top" />
+              </div>
 
-                  <div class="card-body">
-                    <h5 class="card-title mt-2 fs-6">
-                      {{ truncateString(apartment.title, 15) }}
-                    </h5>
-                    <p class="m-0 p-0">
-                      {{ apartment.street_name }} {{ apartment.street_number }}
-                    </p>
-                    <p class="mb-3 p-0">{{ apartment.city }}</p>
+              <div class="card-body">
+                <h5 class="card-title mt-2 fs-6">
+                  {{ truncateString(apartment.title, 15) }}
+                </h5>
+                <p class="m-0 p-0">
+                  {{ apartment.street_name }} {{ apartment.street_number }}
+                </p>
+                <p class="mb-3 p-0">{{ apartment.city }}</p>
 
 
-                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                      class="my_btn_primary"  target="_blank">Details</router-link>
-                  </div>
-                </div>
+                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary"
+                  target="_blank">Details</router-link>
               </div>
             </div>
+
           </div>
+
         </div>
-        <!-- /apartment--card -->
       </div>
-    
+
+    </div>
+
+  </div>
+
   <AppModal :slug="slug" />
 </template>
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
+
 .container-fluid {
   padding-top: 100px;
 }
+
 .my_column {
   background-color: #F2F4F7;
   border: 1px solid #F2F4F7;
