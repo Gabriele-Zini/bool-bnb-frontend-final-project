@@ -21,7 +21,7 @@ export default {
             checkError: false,
             messageSucces: false,
             checkCoverImage: false,
-            imagesFlag : true,
+            imagesFlag: true,
             images: [],
         };
     },
@@ -72,45 +72,34 @@ export default {
 }
 </script>
 <template>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center g-5" v-if="loading && checkCoverImage === true">
             <h4 class="mb-4 text-center text-center fs-2"> {{ apartment.title }} </h4>
 
-            <!-- cover image -->
-            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 mx-auto ms_image-details-page-box">
-                <h4 class="text-center fs-3">Cover Image</h4>
-
-                <div v-for="image in apartment.images">
-                    <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                        class="border rounded" :alt="apartment.title">
-                </div>
-
-            </div>
-
             <!-- gallery -->
-            <h4 v-if="images" class="text-center">Gallery</h4>
-            <div class="row justify-content-center g-5">
-                <div class="col-12 col-sm-10 col-md-6 col-lg-3 mx-auto ms_image-details-page-box" v-for="image in apartment.images">
+            <h4 v-if="images" class="fs-3 mt-5 text-center">Gallery</h4>
 
-                    <!-- <div v-if="apartment.images.length === 0">
-                        <img class="rounded" :src="getImage('no_Image_Available.jpg')"
-                        :alt="apartment.title">
-                    </div> -->
+                <div class="col-12 col-sm-10 col-md-6 col-lg-4 mx-auto ms_image-details-page-box"
+                    v-for="image in apartment.images">
 
-                    <div v-if="image.cover_image !== 1">
-                        <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                        class="border rounded" :alt="apartment.title">
+                    <div>
+                        <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
+                            :alt="apartment.title">
                     </div>
-                                        
-                </div>
-            </div>
 
-            <div class="bro">
+                </div>
+
+        </div>
+
+        <!-- apartment infos -->
+        <div class="row justify-content-center mt-5">
+
+            <div class="col-12 col-sm-10 col-md-9 col-lg-8 col-xl-6">
                 <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
                     <div class="my_column">
-                        <h4 class="text-center pt-3 my_text">Caratterische</h4>
+                        <h4 class="text-center mb-5 fs-3 pt-3 my_text">Caratterische</h4>
                         <ul class="">
-
+    
                             <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
                                 apartment.apartment_info.mt_square }} </li>
                             <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
@@ -132,14 +121,14 @@ export default {
                                 </p>
                             </li>
                         </ul>
-
-
+    
+    
                         <!-- button to send messages to apartment -->
                         <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             @click="message(apartment.slug)">Send a
                             message
                         </a>
-
+    
                     </div>
                 </div>
             </div>
