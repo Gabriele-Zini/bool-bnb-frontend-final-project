@@ -9,6 +9,8 @@ export default {
       store,
       apartments: [],
       slug: "",
+      currentPage: 1,
+      totalPages: 1,
     };
   },
 
@@ -20,9 +22,10 @@ export default {
   },
   methods: {
     fetchData() {
-      axios.get(`${this.store.baseUrl}/api/apartments`).then((resp) => {
+      axios.get(`${this.store.baseUrl}/api/apartments?page=${this.currentPage}`).then((resp) => {
         console.log(resp.data);
         this.apartments = resp.data.result.data;
+        this.totalPages = resp.data.result.last_page;
       });
     },
     truncateString(stringa, lunghezzaMassima) {
@@ -34,6 +37,14 @@ export default {
     },
     message(slug) {
       this.slug = slug;
+    },
+    changePage(page) {
+      this.currentPage = page;
+      this.fetchData();
+      window.scrollTo({
+      top: 400,
+      behavior: "smooth"
+    });
     },
   },
 };
@@ -52,37 +63,46 @@ export default {
     <div class="row justify-content-center my-5">
       <div class="col-md-10">
         <div class="row">
-          <div
-            class="col-12 col-md-6 col-lg-3 mb-4"
-            v-for="apartment in apartments"
-            :key="apartment.id"
-          >
+          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in apartments" :key="apartment.id">
             <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
               <i class="fa-regular fa-gem ms_icon-sponsored"></i>
-              <img
-                :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`"
-                alt=""
-                class="card-img-top"
-              />
+              <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt="" class="card-img-top" />
               <div class="card-body">
-                    <h5 class="card-title mt-2 fs-6">
-                      {{ truncateString(apartment.title, 15) }}
-                    </h5>
-                    <p class="m-0 p-0">
-                      {{ apartment.street_name }} {{ apartment.street_number }}
-                    </p>
-                    <p class="mb-3 p-0">{{ apartment.city }}</p>
+                <h5 class="card-title mt-2 fs-6">
+                  {{ truncateString(apartment.title, 15) }}
+                </h5>
+                <p class="m-0 p-0">
+                  {{ apartment.street_name }} {{ apartment.street_number }}
+                </p>
+                <p class="mb-3 p-0">{{ apartment.city }}</p>
 
 
-                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                      class="my_btn_primary"  target="_blank">Details</router-link>
-                </div>
+                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary"
+                  target="_blank">Details</router-link>
+              </div>
               <!-- </div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
+    <nav aria-label="Page navigation" class="my-4 container">
+      <ul class="pagination">
+        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+          <a class="page-link" href="#" aria-label="Previous" @click.prevent="changePage(currentPage - 1)">
+            Previous<span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
+          <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+          <a class="page-link" href="#" aria-label="Next" @click.prevent="changePage(currentPage + 1)">
+            Next <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <!-- /apartment--card -->
   <AppModal :slug="slug" />
@@ -104,7 +124,7 @@ export default {
     justify-content: center;
     height: 100%;
     align-items: center;
-    
+
     h1 {
       font-size: 6.5rem;
       color: white;
