@@ -9,6 +9,7 @@ export default {
       store,
       apartments: [],
       slug: "",
+      location: ''
     };
   },
 
@@ -35,6 +36,13 @@ export default {
     message(slug) {
       this.slug = slug;
     },
+    search() {
+      console.log(this.location);
+      this.store.location = this.location;
+
+      this.$router.push({ path: '/search', query: { location: this.location } });
+      // this.$router.push('/search');
+    }
   },
 };
 </script>
@@ -52,31 +60,23 @@ export default {
     <div class="row justify-content-center my-5">
       <div class="col-md-10">
         <div class="row">
-          <div
-            class="col-12 col-md-6 col-lg-3 mb-4"
-            v-for="apartment in apartments"
-            :key="apartment.id"
-          >
+          <div class="col-12 col-md-6 col-lg-3 mb-4" v-for="apartment in apartments" :key="apartment.id">
             <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
               <i class="fa-regular fa-gem ms_icon-sponsored"></i>
-              <img
-                :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`"
-                alt=""
-                class="card-img-top"
-              />
+              <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt="" class="card-img-top" />
               <div class="card-body">
-                    <h5 class="card-title mt-2 fs-6">
-                      {{ truncateString(apartment.title, 15) }}
-                    </h5>
-                    <p class="m-0 p-0">
-                      {{ apartment.street_name }} {{ apartment.street_number }}
-                    </p>
-                    <p class="mb-3 p-0">{{ apartment.city }}</p>
+                <h5 class="card-title mt-2 fs-6">
+                  {{ truncateString(apartment.title, 15) }}
+                </h5>
+                <p class="m-0 p-0">
+                  {{ apartment.street_name }} {{ apartment.street_number }}
+                </p>
+                <p class="mb-3 p-0">{{ apartment.city }}</p>
 
 
-                    <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                      class="my_btn_primary"  target="_blank">Details</router-link>
-                </div>
+                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary"
+                  target="_blank">Details</router-link>
+              </div>
               <!-- </div> -->
             </div>
           </div>
@@ -86,6 +86,11 @@ export default {
   </div>
   <!-- /apartment--card -->
   <AppModal :slug="slug" />
+  <div class="col-10 d-flex mx-auto">
+    <input type="search" v-model="location" class="form-control w-25 me-1 h-100" id="search"
+      placeholder="Search your destination">
+    <button type="submit" :disabled="location === ''" @click="search" class="btn btn-success mb-3">Search</button>
+  </div>
 </template>
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
@@ -104,7 +109,7 @@ export default {
     justify-content: center;
     height: 100%;
     align-items: center;
-    
+
     h1 {
       font-size: 6.5rem;
       color: white;

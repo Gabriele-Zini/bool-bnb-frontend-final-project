@@ -77,85 +77,85 @@ export default {
     <div class="container-fluid d-flex justify-content-center  mt-5">
         <div class="row p-5">
             <div class="mx-auto" v-if="loading">
-                    <h4 class="mb-5 text-center fs-2"> {{ apartment.title }} </h4>
-                    <div v-if="checkCoverImage === true && images === true">
-                        <h4 class="text-center fs-3">Cover Image</h4>
-                        <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
-                            <div v-for="image in apartment.images">
-                                <img class="rounded" v-if="apartment.images.length === 0"
-                                    :src="getImage('no_Image_Available.jpg')" :alt="apartment.title">
-                                <div v-else class="">
-                                    <div class="">
-                                        <img v-if="image.cover_image === 1"
-                                            :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                                            class="border rounded" :alt="apartment.title">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h4 v-if="images" class="text-center">Gallery</h4>
+                <h4 class="mb-5 text-center fs-2"> {{ apartment.title }} </h4>
+                <div v-if="checkCoverImage === true && images === true">
+                    <h4 class="text-center fs-3">Cover Image</h4>
                     <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
-
                         <div v-for="image in apartment.images">
                             <img class="rounded" v-if="apartment.images.length === 0"
                                 :src="getImage('no_Image_Available.jpg')" :alt="apartment.title">
                             <div v-else class="">
                                 <div class="">
-                                    <img v-if="image.cover_image !== 1"
+                                    <img v-if="image.cover_image === 1"
                                         :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
                                         class="border rounded" :alt="apartment.title">
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <div class="bro">
-                                <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
-                                    <div class="my_column">
-                                        <h4 class="text-center pt-3 my_text">Caratterische</h4>
-                                        <ul class="">
+                </div>
+                <h4 v-if="images" class="text-center">Gallery</h4>
+                <div class="cards d-flex flex-wrap justify-content-center gap-2 pb-5 rounded">
 
-                                            <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
-                                                apartment.apartment_info.mt_square }} </li>
-                                            <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
-                                                apartment.apartment_info.num_bathrooms }}</li>
-                                            <li><i class="fa-solid fa-bed"></i> <strong>Beds:</strong> {{
-                                                apartment.apartment_info.num_beds
-                                            }} </li>
-                                            <li><i class="fa-solid fa-hotel"></i> <strong>Rooms:</strong> {{
-                                                apartment.apartment_info.num_rooms }}</li>
-                                            <li><i class="fa-solid fa-road"></i> <strong>Is located in:</strong> {{
-                                                apartment.street_name }}
-                                                n. {{ apartment.street_number }}, {{
-                                                    apartment.postal_code }}, {{ apartment.city }} ({{ apartment.country }})
-                                            </li>
-                                            <li><strong>Services: </strong>
-                                                <p class="d-inline" v-for="(service, index) in apartment.services"
-                                                    :key="service.index">{{
-                                                        index > 0 ? ', ' : '' }}{{ service.name }}{{ index ==
+                    <div v-for="image in apartment.images">
+                        <img class="rounded" v-if="apartment.images.length === 0" :src="getImage('no_Image_Available.jpg')"
+                            :alt="apartment.title">
+                        <div v-else class="">
+                            <div class="">
+                                <img v-if="image.cover_image !== 1"
+                                    :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
+                                    :alt="apartment.title">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bro">
+                    <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
+                        <div class="my_column">
+                            <h4 class="text-center pt-3 my_text">Caratterische</h4>
+                            <ul class="">
+
+                                <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
+                                    apartment.apartment_info.mt_square }} </li>
+                                <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
+                                    apartment.apartment_info.num_bathrooms }}</li>
+                                <li><i class="fa-solid fa-bed"></i> <strong>Beds:</strong> {{
+                                    apartment.apartment_info.num_beds
+                                }} </li>
+                                <li><i class="fa-solid fa-hotel"></i> <strong>Rooms:</strong> {{
+                                    apartment.apartment_info.num_rooms }}</li>
+                                <li><i class="fa-solid fa-road"></i> <strong>Is located in:</strong> {{
+                                    apartment.street_name }}
+                                    n. {{ apartment.street_number }}, {{
+                                        apartment.postal_code }}, {{ apartment.city }} ({{ apartment.country }})
+                                </li>
+                                <li><strong>Services: </strong>
+                                    <p class="d-inline" v-for="(service, index) in apartment.services" :key="service.index">
+                                        {{
+                                            index > 0 ? ', ' : '' }}{{ service.name }}{{ index ==
         apartment.services.length - 1 ?
         '.' : '' }}</p>
-                                            </li>
-                                        </ul>
+                                </li>
+                            </ul>
 
 
-                                        <!-- button to sand messages to apartment -->
+                            <!-- button to sand messages to apartment -->
 
 
-                                        <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" @click="message(apartment.slug)">Send a
-                                            message</a>
+                            <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                @click="message(apartment.slug)">Send a
+                                message</a>
 
 
 
 
 
-                                    </div>
-
-                                    <div>
-                                    </div>
-                                </div>
                         </div>
+
+                        <div>
+                        </div>
+                    </div>
+                </div>
 
 
 

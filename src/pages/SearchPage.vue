@@ -39,9 +39,26 @@ export default {
   mounted() {
     this.fetchServices();
     this.mapInit();
+    if (this.$route.query.location) {
+      this.locationReceived();
+    }
   },
-
+  
   methods: {
+    locationReceived() {
+      console.log(this.$route.query.location);
+      let base_url = `https://api.tomtom.com/search/2/geocode/${this.$route.query.location}.json?storeResult=false&view=Unified&key=HAMFczyVGd30ClZCfYGP9To9Y18u6eq7`
+      
+
+      axios.get(base_url)
+      .then((resp) => {
+        console.log(resp.data.results[0].position);
+        this.latitude = resp.data.results[0].position.lat;
+        this.longitude = resp.data.results[0].position.lon;
+
+        this.fetchData();
+      })
+    },
     message(slug) {
       this.slug = slug;
     },
@@ -400,7 +417,8 @@ export default {
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
-          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments"
+            :key="apartment.id">
 
             <div class="card position-relative ms_shadow"
               :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
