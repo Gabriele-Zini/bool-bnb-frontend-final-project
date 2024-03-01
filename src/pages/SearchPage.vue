@@ -303,7 +303,7 @@ export default {
     <div class="row justify-content-center flex-column">
 
       <!-- form to request data -->
-      <div class="col-12 col-md-10 border-bottom pb-4 mx-auto">
+      <div class="col-12 col-md-10 col-lg-8 border-bottom pb-4 mx-auto">
         <h4 class="p-4">Select a position:</h4>
         <form @submit.prevent="fetchData()" action="" method="GET">
 
@@ -370,17 +370,20 @@ export default {
                   </div>
                 </div>
               </div>
+
+              <!-- buttons -->
+              <div>
+                <button type="submit" class="my_btn_primary me-2">Search</button>
+                <button type="button" class="my_btn_warning" @click="resetParameters()">
+                  Reset Params
+                </button>
+              </div>
+
             </div>
 
           </div>
 
 
-          <div>
-            <button type="submit" class="my_btn_primary me-2">Search</button>
-            <button type="button" class="my_btn_warning" @click="resetParameters()">
-              Reset Params
-            </button>
-          </div>
         </form>
         <!-- requested data returns -->
         <div class="mt-5" v-if="params === 1">
@@ -393,11 +396,11 @@ export default {
       </div>
 
       <!-- apartment--card -->
-      <div class="col-12 col-md-10 g-5 mx-auto" v-if="params !== 1">
+      <div class="col-12 col-md-10 col-lg-8 g-5 mx-auto" v-if="params !== 1">
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
-          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
 
             <div class="card position-relative ms_shadow"
               :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
