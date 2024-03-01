@@ -396,11 +396,11 @@ export default {
       </div>
 
       <!-- apartment--card -->
-      <div class="col-12 col-md-10 col-lg-8 g-5 mx-auto" v-if="params !== 1">
+      <div class="col-12 col-md-11 col-lg-10 g-5 mx-auto" v-if="params !== 1">
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
-          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
+          <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments" :key="apartment.id">
 
             <div class="card position-relative ms_shadow"
               :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
@@ -450,15 +450,6 @@ export default {
   padding: 20px;
 }
 
-// .cursor-pointer {
-//   cursor: pointer;
-//   @include my_btn_primary();
-// }
-
-// .cursor-pointer:hover {
-//   @include my_btn_primaryHover();
-// }
-
 .radius-div {
   transition: opacity 1s ease;
   opacity: 0;
@@ -474,10 +465,4 @@ export default {
   height: 400px;
 }
 
-img {
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  border-radius: 20px;
-}
 </style>
