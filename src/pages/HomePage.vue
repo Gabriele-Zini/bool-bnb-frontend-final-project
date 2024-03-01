@@ -75,7 +75,7 @@ export default {
 
 
                     <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
-                      class="my_btn_primary"  target="_blank">Mostra</router-link>
+                      class="my_btn_primary"  target="_blank">Details</router-link>
                 </div>
               <!-- </div> -->
             </div>
