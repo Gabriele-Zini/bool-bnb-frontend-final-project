@@ -55,7 +55,8 @@ footer {
     margin-top: 60px;
     min-height: 200px;
     padding-top: 50px;
-    background-color: #d6e9f0;
+    // background-color: #d6e9f0;
+    background-color: #eaecf0;
 
 
     ul {
@@ -80,9 +81,8 @@ footer {
     }
 
     .bottom-bar {
-        background-color: #52a3c0;
+        background-color: #d6e9f0;
             h4 {
-            color: white;
         }
     }
 
