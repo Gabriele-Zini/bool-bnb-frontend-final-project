@@ -59,13 +59,6 @@ export default {
           zoom: 10,
         });
 
-        // map.on("load", () => {
-        //   let element = document.createElement("div");
-        //   element.id = "marker";
-        //   element.innerHTML = "125$";
-        //   new tt.Marker({ element: element }).setLngLat(center).addTo(map);
-        // });
-
         // add map options
         let options = {
           searchOptions: {
@@ -124,21 +117,6 @@ export default {
             "start position"
           )
           startPosition.setPopup(popup).togglePopup()
-
-
-          // MARKERS NOT IMPLEMENTED
-          // console.log(this.markers);
-          // if (this.results === true) {
-          //   console.log(this.results);
-          //   for (let i = 0; i < this.markers.length; i++) {
-          //     const marker = this.markers[i].center;
-          //     console.log(marker);
-          //     this.markersIcons.push(new tt.Marker().setLngLat(marker).addTo(map).setPopup(new tt.Popup({ offset: popupOffsets }).setHTML(
-          //       `${this.markers[i].name}`
-          //     )));
-          //   }
-
-          // }
         });
 
         ttSearchBox.on("tomtom.searchbox.resultfocused", (e) => {
@@ -151,7 +129,7 @@ export default {
           for (let i = 0; i < this.markersIcons.length; i++) {
             this.markersIcons[i].remove();
           }
-          // Svuotare l'array markersIcons e markers
+          // Reset markers on map
           this.markersIcons = [];
           this.markers = [];
           // else set params
