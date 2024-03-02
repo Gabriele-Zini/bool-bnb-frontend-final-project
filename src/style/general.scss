@@ -17,6 +17,15 @@ form,input,label,h4 {
     @include p_color;
 }
 
+img {
+    width: 100%;
+    // max-width: 150px;
+    // min-width: 80px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 .ms_icon-sponsored {
     position: absolute;
     font-size: 1.5rem;
@@ -32,4 +41,8 @@ form,input,label,h4 {
 
 .ms_shadow-sponsored {
     box-shadow: 3px 10px 10px 3px rgba($color: #0dcaf0, $alpha: .4);
+}
+
+.ms_image-details-page-box {
+    max-width: 520px;
 }
