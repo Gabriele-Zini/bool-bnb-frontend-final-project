@@ -115,9 +115,9 @@ export default {
 
 
 .container-fluid {
-  background-image: url(../assets/img/interior-home.jpg);
+  background-image: url(../assets/img/cover_image.webp);
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   height: 500px;
 
   .title {
