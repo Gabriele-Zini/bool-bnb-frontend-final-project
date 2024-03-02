@@ -13,7 +13,10 @@ body {
     overflow-x: hidden;
 }
 
-form,input,label,h4 {
+form,
+input,
+label,
+h4 {
     @include p_color;
 }
 
@@ -43,6 +46,14 @@ img {
     box-shadow: 3px 10px 10px 3px rgba($color: #0dcaf0, $alpha: .4);
 }
 
-.ms_image-details-page-box {
-    max-width: 520px;
-}
+
+    
+  .ms_image-details-page-box {
+    margin: 0 auto;
+    img {
+        width: 120px;
+        height: 60px !important;
+        cursor: pointer;
+    }
+}  
+

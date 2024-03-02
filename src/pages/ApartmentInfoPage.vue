@@ -23,6 +23,7 @@ export default {
             checkCoverImage: false,
             imagesFlag: true,
             images: [],
+            i: 0
         };
     },
 
@@ -32,6 +33,23 @@ export default {
     methods: {
         message(slug) {
             this.slug = slug;
+        },
+        next(x, length) {
+            if (x == length - 1) {
+                this.i = 0
+            } else {
+                this.i++;
+            }
+        },
+        prev(x, length) {
+            if (x == 0) {
+                this.i = length - 1;
+            } else {
+                this.i--;
+            }
+        },
+        selectImage(index){
+            this.i = index;
         }
     },
 
@@ -73,22 +91,35 @@ export default {
 </script>
 <template>
     <div class="container">
-        <div class="row justify-content-center g-5" v-if="loading && checkCoverImage === true">
+        <div class="row justify-content-center g-2" v-if="loading && checkCoverImage === true">
             <h4 class="mb-4 text-center text-center fs-2"> {{ apartment.title }} </h4>
-
             <!-- gallery -->
-            <h4 v-if="images" class="fs-3 mt-5 text-center">Gallery</h4>
+            <h4 v-if="images" class="fs-3 mt-5 text-center ">Gallery</h4>
 
-                <div class="col-12 col-sm-10 col-md-6 col-lg-4 mx-auto ms_image-details-page-box"
-                    v-for="image in apartment.images">
+            <!-- Carosello -->
+            <div class="slide w-50 mx-auto">
+                <div v-for="(image, index) in apartment.images" class="carousel-item position-relative"
+                    :class='index == i ? "active" : ""'>
+                    <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class=" d-block">
 
-                    <div>
-                        <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="border rounded"
+                    <button @click="prev(index, apartment.images.length)" type="button" class="prev btn fs-4">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button @click="next(index, apartment.images.length)" type="button" class="next btn fs-4">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Lista img -->
+            <div class="d-flex justify-content-center">
+                <div class="d-inline-block">
+                    <div class="d-inline-block ms_image-details-page-box" v-for="(image, index) in apartment.images">
+                        <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                            :class="index == i ? 'border border-2 border-info' : ''" @click="selectImage(index)" class="d-inline-block border rounded"
                             :alt="apartment.title">
                     </div>
-
                 </div>
-
+            </div>
         </div>
 
         <!-- apartment infos -->
@@ -99,7 +130,7 @@ export default {
                     <div class="my_column">
                         <h4 class="text-center mb-5 fs-3 pt-3 my_text">Caratterische</h4>
                         <ul class="">
-    
+
                             <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
                                 apartment.apartment_info.mt_square }} </li>
                             <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
@@ -121,14 +152,14 @@ export default {
                                 </p>
                             </li>
                         </ul>
-    
-    
+
+
                         <!-- button to send messages to apartment -->
                         <a href="#" class="my_btn_warning my_btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             @click="message(apartment.slug)">Send a
                             message
                         </a>
-    
+
                     </div>
                 </div>
             </div>
@@ -141,6 +172,23 @@ export default {
 @use "../style/partials/mixin" as *;
 @use "../style/partials/variables" as *;
 
+.next {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    translate: 0 -50%;
+    color: #EAECF0;
+    background-color: rgba($color: #000000, $alpha: .3);
+}
+
+.prev {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    translate: 0 -50%;
+    color: #EAECF0;
+    background-color: rgba($color: #000000, $alpha: .3);
+}
 
 .my_column {
     background-color: #EAECF0;
