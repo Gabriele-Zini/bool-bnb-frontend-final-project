@@ -91,13 +91,13 @@ export default {
 </script>
 <template>
     <div class="container">
-        <div class="row justify-content-center g-2" v-if="loading && checkCoverImage === true">
+        <div class="row row-cols-1 justify-content-center g-2" v-if="loading && checkCoverImage === true">
             <h4 class="mb-4 text-center text-center fs-2"> {{ apartment.title }} </h4>
             <!-- gallery -->
             <h4 v-if="images" class="fs-3 mt-5 text-center ">Gallery</h4>
 
             <!-- Carosello -->
-            <div class="slide w-50 mx-auto">
+            <div class="slide col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7 mx-auto">
                 <div v-for="(image, index) in apartment.images" class="carousel-item position-relative"
                     :class='index == i ? "active" : ""'>
                     <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class=" d-block">
@@ -111,7 +111,7 @@ export default {
                 </div>
             </div>
             <!-- Lista img -->
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center text-center">
                 <div class="d-inline-block">
                     <div class="d-inline-block ms_image-details-page-box" v-for="(image, index) in apartment.images">
                         <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
@@ -222,7 +222,6 @@ img {
 
 .cards {
     border-radius: 10px;
-    margin: 10px;
     padding: 10px;
     line-height: 3rem;
 }
