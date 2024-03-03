@@ -6,10 +6,12 @@ export default {
         {
           name: "home",
           title: "Home",
+          icon: "fa-house"
         },
         {
           name: "search",
           title: "Search",
+          icon: "fa-magnifying-glass"
         },
       ],
     };
@@ -35,12 +37,12 @@ export default {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="ms-auto navbar-nav">
           <li class="nav-item" v-for="link in links" :key="link.title">
-            <router-link :to="{ name: link.name }" class="nav-link">{{
+            <router-link :to="{ name: link.name }" class="nav-link"><i class="fa-solid nav-item me-1" :class="link.icon"></i> {{
               link.title
             }}</router-link>
           </li>
           <li class="nav-item">
-            <a href="http://127.0.0.1:8000/login" class="nav-link">Profile</a>
+            <a href="http://127.0.0.1:8000/login" class="nav-link"><i class="fa-solid fa-user me-1"></i> Profile</a>
           </li>
         </ul>
       </div>
