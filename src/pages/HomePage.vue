@@ -11,6 +11,7 @@ export default {
       slug: "",
       currentPage: 1,
       totalPages: 1,
+      location: '',
     };
   },
 
@@ -28,6 +29,7 @@ export default {
         this.totalPages = resp.data.result.last_page;
       });
     },
+
     truncateString(stringa, lunghezzaMassima) {
       if (stringa.length <= lunghezzaMassima) {
         return stringa;
@@ -35,9 +37,11 @@ export default {
         return stringa.substring(0, lunghezzaMassima) + "...";
       }
     },
+
     message(slug) {
       this.slug = slug;
     },
+
     changePage(page) {
       this.currentPage = page;
       this.fetchData();
@@ -47,6 +51,10 @@ export default {
       duration:1000
     });
     },
+
+    startSearch() {
+      this.$router.push({ path: '/search', query: { location: this.location } });
+    }
   },
 };
 </script>
@@ -81,7 +89,8 @@ export default {
       </div>
 
     </div>
-    <nav aria-label="Page navigation" class="my-4 container">
+    <nav aria-label="Page navigation d-flex justify-content-between" class="my-4 container">
+
       <ul class="pagination">
         <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
           <a class="page-link" href="#" aria-label="Previous" @click.prevent="changePage(currentPage - 1)">
@@ -97,6 +106,11 @@ export default {
           </a>
         </li>
       </ul>
+
+      <div class="ms_searchbox">
+        <input type="text" placeholder="Find your destination" v-model="location">
+        <button @click="startSearch" :disabled="location == ''">Search</button>
+      </div>
     </nav>
   </div>
 
