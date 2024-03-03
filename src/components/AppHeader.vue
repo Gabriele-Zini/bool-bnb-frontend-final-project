@@ -20,7 +20,7 @@ export default {
   <nav class="navbar navbar-expand-lg border-bottom border danger p-3">
     <div class="container-fluid">
       <a class="logo" href="#"><img src="../assets/img/b.png" alt="" /></a>
-      <!-- <a class="navbar-brand" href="#">BoolBnB</a> -->
+
       <button
         class="navbar-toggler"
         type="button"
