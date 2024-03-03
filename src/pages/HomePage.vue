@@ -116,10 +116,10 @@ export default {
     </nav>
 
     <div class="row justify-content-center">
-      <div class="col-12">
-        <div class="ms_searchbox d-flex justify-content-center">
-          <input type="text" placeholder="Find your destination" v-model="location">
-          <button @click="startSearch" :disabled="location == ''">Search</button>
+      <div class="col-4 box-search">
+        <div class="d-flex justify-content-center">
+          <input class="ms_searchbox" type="text" placeholder="Find your destination" v-model="location">
+          <button class="my-btn-search" @click="startSearch" :disabled="location == ''">Search</button>
         </div>
       </div>
     </div>
