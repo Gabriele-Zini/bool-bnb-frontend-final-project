@@ -1,7 +1,10 @@
 <script>
+import { store } from "../store";
+
 export default {
   data() {
     return {
+      store,
       links: [
         {
           name: "home",
@@ -18,8 +21,9 @@ export default {
   },
 };
 </script>
+
 <template>
-  <nav class="navbar navbar-expand-lg border-bottom border danger p-3">
+  <nav class="navbar navbar-expand-lg border-bottom border danger p-3" :class="store.headerTransparent === true ? 'ms_header-transparent' : ''">
     <div class="container-fluid">
       <a class="logo" href="#"><img src="../assets/img/b.png" alt="" /></a>
 
@@ -49,8 +53,11 @@ export default {
     </div>
   </nav>
 </template>
+
 <style lang="scss" scoped>
 @use "../style/partials/variables" as *;
+
+
 .navbar {
   background-color: #f2f4f7;
   position: fixed;
@@ -59,12 +66,14 @@ export default {
   z-index: 999;
   width: 100%;
 }
+
 .logo {
   img {
     max-height: 40px;
     border-radius: 10px;
   }
 }
+
 .navbar {
   display: flex;
   justify-content: center;
@@ -78,9 +87,21 @@ export default {
     background: none;
   }
 }
+
 h1 {
   font-family: "Montserrat", sans-serif;
   font-size: 3rem;
   color: white;
 }
+
+.ms_header-transparent {
+  background-color: transparent;
+  color: #f1f4f7 !important;
+  border: none !important;
+
+  a {
+    color: inherit !important;
+  }
+}
+
 </style>
