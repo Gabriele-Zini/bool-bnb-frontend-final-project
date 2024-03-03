@@ -45,10 +45,27 @@ img {
 .ms_shadow-sponsored {
     box-shadow: 3px 10px 10px 3px rgba($color: #0dcaf0, $alpha: .4);
 }
-
-.ms_searchbox {
+.box-search {
+    border-bottom: 1px solid #0dcaf0; 
+    padding: 2rem;
 }
-    
+.ms_searchbox {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+.my-btn-search {
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: #0dcaf0;
+    transition: background-color .6s ease-in-out;
+}
+.my-btn-search:hover {
+    color: white;
+    background-color: #0dcaf0;
+}
 .ms_image-details-page-box {
     margin: 0 auto;
     img {
