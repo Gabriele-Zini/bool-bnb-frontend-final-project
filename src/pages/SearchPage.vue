@@ -417,7 +417,7 @@ export default {
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
-          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments"
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 g-5 mx-auto" v-for="apartment in filteredApartments"
             :key="apartment.id">
 
             <div class="card position-relative ms_shadow"

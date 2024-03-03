@@ -46,10 +46,10 @@ export default {
       this.currentPage = page;
       this.fetchData();
       window.scrollTo({
-      top: 400,
-      behavior: "smooth",
-      duration:1000
-    });
+        top: 400,
+        behavior: "smooth",
+        duration: 1000
+      });
     },
 
     startSearch() {
@@ -58,6 +58,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div class="ms_container mt-5">
     <div class="row h-100">
@@ -68,9 +69,9 @@ export default {
   </div>
 
   <!-- apartment--card -->
-  <div class="container-fluid">
+  <div class="container">
     <div class="row justify-content-center my-5">
-      <div class="col-12 col-md-6 col-lg-4 col-xl-4 g-5" v-for="apartment in apartments" :key="apartment.id">
+      <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 g-5" v-for="apartment in apartments" :key="apartment.id">
         <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
           <i class="fa-regular fa-gem ms_icon-sponsored"></i>
           <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt="" class="card-img-top" />
@@ -89,33 +90,44 @@ export default {
       </div>
 
     </div>
-    <nav aria-label="Page navigation d-flex justify-content-between" class="my-4 container">
+    <nav aria-label="Page navigation"
+      class="my-4 container">
 
-      <ul class="pagination">
-        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-          <a class="page-link" href="#" aria-label="Previous" @click.prevent="changePage(currentPage - 1)">
-            Previous<span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
-          <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
-        </li>
-        <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
-          <a class="page-link" href="#" aria-label="Next" @click.prevent="changePage(currentPage + 1)">
-            Next <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-
-      <div class="ms_searchbox">
-        <input type="text" placeholder="Find your destination" v-model="location">
-        <button @click="startSearch" :disabled="location == ''">Search</button>
+      <div class="text-center d-flex justify-content-center">
+        <ul class="pagination d-flex">
+          <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+            <a class="page-link flex-grow-1" href="#" aria-label="Previous"
+              @click.prevent="changePage(currentPage - 1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
+            <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+            <a class="page-link flex-grow-1" href="#" aria-label="Next" @click.prevent="changePage(currentPage + 1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
       </div>
+
     </nav>
+
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="ms_searchbox d-flex justify-content-center">
+          <input type="text" placeholder="Find your destination" v-model="location">
+          <button @click="startSearch" :disabled="location == ''">Search</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <AppModal :slug="slug" />
 </template>
+
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
