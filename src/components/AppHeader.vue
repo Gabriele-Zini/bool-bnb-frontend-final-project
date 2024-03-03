@@ -42,7 +42,7 @@ export default {
             }}</router-link>
           </li>
           <li class="nav-item">
-            <a href="http://127.0.0.1:8000/login" class="nav-link"><i class="fa-solid fa-user me-1"></i> Profile</a>
+            <a href="http://127.0.0.1:8000/" class="nav-link"><i class="fa-solid fa-user me-1"></i> Profile</a>
           </li>
         </ul>
       </div>

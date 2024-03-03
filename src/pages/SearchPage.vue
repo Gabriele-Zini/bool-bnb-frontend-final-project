@@ -431,7 +431,7 @@ export default {
       </div>
 
       <!-- apartment--card -->
-      <div class="col-12 col-md-10 col-lg-8 g-5 mx-auto" v-if="params !== 1">
+      <div class="col-12 col-md-10 col-lg-8 g-5 mx-auto p-0" v-if="params !== 1">
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
@@ -446,7 +446,7 @@ export default {
                   alt="" class="card-img-top" />
               </div>
 
-              <div class="card-body">
+              <div class="card-body ms_card">
                 <h5 class="card-title mt-2 fs-6">
                   {{ truncateString(apartment.title, 15) }}
                 </h5>

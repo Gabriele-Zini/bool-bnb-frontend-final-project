@@ -54,6 +54,7 @@ export default {
 
     startSearch() {
       this.$router.push({ path: '/search', query: { location: this.location } });
+      window.scrollTo(0, 600);
     }
   },
 };
@@ -71,11 +72,11 @@ export default {
   <!-- apartment--card -->
   <div class="container">
     <div class="row justify-content-center my-5">
-      <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 g-5" v-for="apartment in apartments" :key="apartment.id">
+      <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 g-5 p-3" v-for="apartment in apartments" :key="apartment.id">
         <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
           <i class="fa-regular fa-gem ms_icon-sponsored"></i>
           <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt="" class="card-img-top" />
-          <div class="card-body">
+          <div class="card-body ms_card">
             <h5 class="card-title mt-2 fs-6">
               {{ truncateString(apartment.title, 15) }}
             </h5>
