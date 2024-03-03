@@ -40,7 +40,7 @@ export default {
     this.fetchServices();
     this.mapInit();
     if (this.$route.query.location) {
-      this.locationReceived();
+      this.locationReceived(); 
     }
   },
   
