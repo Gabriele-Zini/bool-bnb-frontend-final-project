@@ -263,6 +263,24 @@ export default {
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
+    getIconClassForService(serviceName) {
+    switch (serviceName) {
+      case 'WiFi':
+        return 'fa-solid fa-wifi';
+      case 'Car Parking':
+        return 'fa-solid fa-square-parking';  
+      case 'Pool':
+        return 'fa-solid fa-person-swimming';  
+      case 'Reception':
+        return 'fa-solid fa-bell-concierge';  
+      case 'Sauna':
+        return 'fa-solid fa-spa'; 
+      case 'Sea View':
+        return 'fa-solid fa-water';       
+      default:
+        return 'fa-solid fa-question'; 
+    }
+  },
 
 
     truncateString(stringa, lunghezzaMassima) {
@@ -397,8 +415,14 @@ export default {
                 </p>
                 <p class="mb-3 p-0">{{ apartment.city }}</p>
 
+                <div class="d-inline p-1" v-for="service in apartment.services" :key="service.id">
+                  <i :class="getIconClassForService(service.name)"></i>
+                </div>
 
-                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary"
+
+
+                
+                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary d-flex justify-content-center"
                   target="_blank">Details</router-link>
               </div>
             </div>
