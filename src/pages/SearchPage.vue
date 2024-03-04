@@ -438,7 +438,7 @@ export default {
           <div class="col-12 col-sm-6 col-lg-5 col-xl-4 g-5 mx-auto" v-for="apartment in filteredApartments"
             :key="apartment.id">
 
-            <div class="card position-relative ms_shadow"
+            <div class="ms_card position-relative "
               :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
               <i v-if="apartment.sponsor" class="fa-regular fa-gem ms_icon-sponsored"></i>
               <div v-for="image in apartment.images">
@@ -450,10 +450,10 @@ export default {
                 <h5 class="card-title mt-2 fs-6">
                   {{ truncateString(apartment.title, 15) }}
                 </h5>
-                <p class="m-0 p-0">
+                <p class="m-0 p-0 txt-card">
                   {{ apartment.street_name }} {{ apartment.street_number }}
                 </p>
-                <p class="mb-3 p-0">{{ apartment.city }}</p>
+                <p class="mb-3 p-0 txt-card">{{ apartment.city }}</p>
 
                 <div class="d-inline p-1" v-for="service in apartment.services" :key="service.id">
                   <i :class="getIconClassForService(service.name)"></i>
@@ -520,6 +520,6 @@ img {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 </style>
