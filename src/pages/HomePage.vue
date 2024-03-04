@@ -77,9 +77,6 @@ export default {
 
 <template>
 
-  <!-- <div class="ms_headerbg">
-
-  </div> -->
   <div class="ms_separator">
 
   </div>
