@@ -82,17 +82,13 @@ export default {
   </div>
 
   <!-- video -->
-  <div class="ms_container">
-    <div class="row w-100">
-      <div class="col-12 ms_video">
-        <video autoplay muted loop id="myVideo">
-          <source src="../assets/video/homepage.mp4" type="video/mp4">
-        </video>
-        <h1>BoolBnB</h1>
-        <p>Your Home Away From Home</p>
-      </div>
+  <div class="w-100">
+        <div class="ms_video-container">
+            <video autoplay loop muted id="myVideo" src="../assets/video/homepage.mp4" class="w-100 ms_404-video"></video>
+            <h2 class="fs-1">BoolBnB</h2>
+            <p class="ms_caption fs-3">Your Home Away From Home</p>
+        </div>
     </div>
-  </div>
 
 
 
@@ -162,38 +158,28 @@ export default {
 @import "@fortawesome/fontawesome-free/css/all.css";
 
 
-.ms_headerbg {
-  width: 100%;
-  height: 73px;
-  background-color: #f2f4f7;
-}
+.ms_video-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
 
-// .ms_separator {
-//   height: 1500px;
-//   width: 100%;
-// }
-
-.ms_container {
-  width: 100%;
-
-  .ms_video {
-
-    #myVideo {
-      width: 102%;
-      filter: brightness(0.65);
-      position: relative;
+    .ms_404-video {
+        filter: brightness(0.60);
     }
 
-    h1 {
-      // font-size: 4rem;
-      // filter: drop-shadow(10px 10px 10px black);
+    h2 {
+        position: absolute;
+        bottom: 105px;
+        color: #f2f4f7;
+        filter: drop-shadow(10px 10px 10px black);
+        // font-size: 2rem;
     }
 
-    p {
-
-      // font-size: 2rem;
-      // filter: drop-shadow(10px 10px 10px black);
+    .ms_caption {
+        position: absolute;
+        bottom: 35px;
+        color: #f2f4f7;
+        filter: drop-shadow(10px 10px 10px black);
     }
-  }
 }
 </style>

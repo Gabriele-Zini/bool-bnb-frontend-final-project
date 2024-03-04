@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-    <div class="mt-5 w-100">
+    <div class="w-100">
         <div class="ms_video-container">
             <video autoplay loop muted src="../assets/video/gobackhome.mp4" class="w-100 ms_404-video"></video>
             <h2 class="fs-2">You're way off track</h2>
@@ -17,6 +17,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 
 .ms_video-container {
     position: relative;
