@@ -97,21 +97,17 @@ export default {
 
 <template>
 
-  <div class="ms_separator">
-
-  </div>
-
   <!-- video -->
   <div class="w-100">
     <div class="ms_video-container">
       <video autoplay loop muted id="myVideo" src="../assets/video/homepage.mp4" class="w-100 ms_404-video"></video>
       <h2 class="fs-1">BoolBnB</h2>
       <p class="ms_caption fs-3">Your Home Away From Home</p>
-      <i class="fa-solid fa-chevron-down"></i>
+      <a href="#card"><i class="fa-solid fa-chevron-down"></i></a>
     </div>
   </div>
 
-
+  <div class="ms_margin w-100" id="card"></div>
   <!-- apartment--card -->
   <div class="container">
     <div class="row justify-content-center my-5">
@@ -187,6 +183,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
+  color: #f2f4f7;
 
   .ms_404-video {
     filter: brightness(0.60);
@@ -207,13 +204,16 @@ export default {
     filter: drop-shadow(10px 10px 10px black);
   }
 
-  i {
+  a {
+    color: inherit;
+    text-decoration: none;
     position: absolute;
     bottom: 25px;
     color: #f2f4f7;
     filter: drop-shadow(10px 10px 10px black);
     animation: arrow 2s linear infinite;
   }
+
 }
 
 @keyframes arrow {
@@ -222,19 +222,24 @@ export default {
     }
 
     25% {
-        bottom: 20px;
+        bottom: 22px;
     }
 
     50% {
-      bottom: 15px;
+      bottom: 18px;
     }
 
     75% {
-        bottom: 20px;
+        bottom: 22px;
     }
 
     100% {
         bottom: 25px;
     }
+}
+
+.ms_margin {
+  margin-top: 18rem;
+  height: 10px;
 }
 </style>
