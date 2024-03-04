@@ -102,7 +102,7 @@ export default {
             <div class="slide col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7 mx-auto">
                 <div v-for="(image, index) in apartment.images" class="carousel-item position-relative"
                     :class='index == i ? "active" : ""'>
-                    <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class=" d-block">
+                    <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`" class="w-100 d-block" style="height: 460px; object-fit: cover;">
 
                     <button @click="prev(index, apartment.images.length)" type="button" class="prev btn fs-4">
                         <i class="fa-solid fa-chevron-left"></i>

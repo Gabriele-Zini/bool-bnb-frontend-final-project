@@ -438,7 +438,7 @@ export default {
       </div>
 
       <!-- apartment--card -->
-      <div class="col-10 p-0 mx-auto" v-if="params !== 1">
+      <div class="col-12 p-0 mx-auto mt-5" v-if="params !== 1">
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
@@ -461,7 +461,7 @@ export default {
                   <p class="m-0 mt-2 p-0 txt-card">
                     {{ apartment.street_name }} {{ apartment.street_number }}
                   </p>
-                  <p class="mb-3 p-0 txt-card">{{ apartment.city }}</p>
+                  <p class="mb-2 p-0 txt-card">{{ apartment.city }}</p>
 
                   <div class="d-inline p-1 ms_services" v-for="service in apartment.services" :key="service.id">
                     <i :class="getIconClassForService(service.name)"></i>

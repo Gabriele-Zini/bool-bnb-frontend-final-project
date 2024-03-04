@@ -107,15 +107,15 @@ export default {
       <video autoplay loop muted id="myVideo" src="../assets/video/homepage.mp4" class="w-100 ms_404-video"></video>
       <h2 class="fs-1">BoolBnB</h2>
       <p class="ms_caption fs-3">Your Home Away From Home</p>
+      <i class="fa-solid fa-chevron-down"></i>
     </div>
   </div>
-
 
 
   <!-- apartment--card -->
   <div class="container">
     <div class="row justify-content-center my-5">
-      <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 g-5 p-3" v-for="apartment in apartments"
+      <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 px-3" v-for="apartment in apartments"
         :key="apartment.id">
         <router-link class="ms_card" :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" target="_blank">
           <div class="position-relative">
@@ -194,7 +194,7 @@ export default {
 
   h2 {
     position: absolute;
-    bottom: 105px;
+    bottom: 125px;
     color: #f2f4f7;
     filter: drop-shadow(10px 10px 10px black);
     // font-size: 2rem;
@@ -202,9 +202,39 @@ export default {
 
   .ms_caption {
     position: absolute;
-    bottom: 35px;
+    bottom: 45px;
     color: #f2f4f7;
     filter: drop-shadow(10px 10px 10px black);
   }
+
+  i {
+    position: absolute;
+    bottom: 25px;
+    color: #f2f4f7;
+    filter: drop-shadow(10px 10px 10px black);
+    animation: arrow 2s linear infinite;
+  }
+}
+
+@keyframes arrow {
+  0% {
+        bottom: 25px;
+    }
+
+    25% {
+        bottom: 20px;
+    }
+
+    50% {
+      bottom: 15px;
+    }
+
+    75% {
+        bottom: 20px;
+    }
+
+    100% {
+        bottom: 25px;
+    }
 }
 </style>
