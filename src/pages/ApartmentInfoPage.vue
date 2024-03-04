@@ -1,4 +1,3 @@
-		
 <script>
 import axios from 'axios';
 import { store } from '../store';
@@ -30,6 +29,7 @@ export default {
     components: {
         AppModal,
     },
+
     methods: {
         message(slug) {
             this.slug = slug;
@@ -48,13 +48,14 @@ export default {
                 this.i--;
             }
         },
-        selectImage(index){
+        selectImage(index) {
             this.i = index;
         }
     },
 
 
     created() {
+        this.store.headerTransparent = false;
         axios.get(`${this.store.baseUrl}/api/apartments/${this.$route.params.slug}`).then((resp) => {
             console.log(resp.data.result.images);
             this.loading = true;
@@ -89,6 +90,7 @@ export default {
 
 }
 </script>
+
 <template>
     <div class="container">
         <div class="row row-cols-1 justify-content-center g-2" v-if="loading && checkCoverImage === true">
@@ -115,8 +117,8 @@ export default {
                 <div class="d-inline-block">
                     <div class="d-inline-block ms_image-details-page-box" v-for="(image, index) in apartment.images">
                         <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                            :class="index == i ? 'border border-2 border-info' : ''" @click="selectImage(index)" class="d-inline-block border rounded"
-                            :alt="apartment.title">
+                            :class="index == i ? 'border border-2 border-info' : ''" @click="selectImage(index)"
+                            class="d-inline-block border rounded" :alt="apartment.title">
                     </div>
                 </div>
             </div>
@@ -132,23 +134,23 @@ export default {
                         <ul class="">
 
                             <li><strong><i class="fa-solid fa-house"></i> Meters square:</strong> {{
-                                apartment.apartment_info.mt_square }} </li>
+            apartment.apartment_info.mt_square }} </li>
                             <li><i class="fa-solid fa-bath"></i> <strong>Bathrooms:</strong> {{
-                                apartment.apartment_info.num_bathrooms }}</li>
+            apartment.apartment_info.num_bathrooms }}</li>
                             <li><i class="fa-solid fa-bed"></i> <strong>Beds:</strong> {{
-                                apartment.apartment_info.num_beds
-                            }} </li>
+            apartment.apartment_info.num_beds
+        }} </li>
                             <li><i class="fa-solid fa-hotel"></i> <strong>Rooms:</strong> {{
-                                apartment.apartment_info.num_rooms }}</li>
+                apartment.apartment_info.num_rooms }}</li>
                             <li><i class="fa-solid fa-road"></i> <strong>Is located in:</strong> {{
-                                apartment.street_name }}
+            apartment.street_name }}
                                 n. {{ apartment.street_number }}, {{
-                                    apartment.postal_code }}, {{ apartment.city }} ({{ apartment.country }})
+            apartment.postal_code }}, {{ apartment.city }} ({{ apartment.country }})
                             </li>
                             <li><strong>Services: </strong>
                                 <p class="d-inline" v-for="(service, index) in apartment.services" :key="service.index">
                                     {{ index > 0 ? ', ' : '' }}{{ service.name }}{{ index == apartment.services.length -
-                                        1 ? '.' : '' }}
+            1 ? '.' : '' }}
                                 </p>
                             </li>
                         </ul>
@@ -167,7 +169,7 @@ export default {
     </div>
     <AppModal :slug="slug" />
 </template>
-        
+
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
 @use "../style/partials/variables" as *;
