@@ -239,7 +239,7 @@ export default {
 }
 
 .ms_margin {
-  margin-top: 18rem;
+  margin-top: 4rem;
   height: 10px;
 }
 </style>
