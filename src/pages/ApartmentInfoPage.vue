@@ -118,7 +118,7 @@ export default {
                     <div class="d-inline-block ms_image-details-page-box" v-for="(image, index) in apartment.images">
                         <img :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
                             :class="index == i ? 'border border-2 border-info' : ''" @click="selectImage(index)"
-                            class="d-inline-block border rounded" :alt="apartment.title">
+                            class="d-inline-block border ms_img-carousel rounded" :alt="apartment.title">
                     </div>
                 </div>
             </div>
@@ -221,6 +221,9 @@ export default {
 img {
     height: 350px;
     aspect-ratio: 1/1;
+}
+.ms_img-carousel {
+    object-fit: cover;
 }
 
 .cards {
