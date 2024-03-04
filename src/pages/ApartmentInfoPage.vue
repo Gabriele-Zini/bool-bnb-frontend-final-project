@@ -126,7 +126,7 @@ export default {
         <div class="row justify-content-center mt-5">
 
             <div class="col-12 col-sm-10 col-md-9 col-lg-8 col-xl-6">
-                <div class="cards text-center border-top border-bottom w-100 pb-4 pt-4">
+                <div class="cards text-center w-100 pb-4 pt-4">
                     <div class="my_column">
                         <h4 class="text-center mb-5 fs-3 pt-3 my_text">Caratterische</h4>
                         <ul class="">
@@ -171,7 +171,9 @@ export default {
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
 @use "../style/partials/variables" as *;
-
+.container {
+    padding-top: 100px;
+}
 .next {
     position: absolute;
     top: 50%;
@@ -191,8 +193,7 @@ export default {
 }
 
 .my_column {
-    background-color: #EAECF0;
-    border: 1px solid #EAECF0;
+    background-color: #eaecf0;
     border-radius: 10px;
     padding: 3rem;
 
