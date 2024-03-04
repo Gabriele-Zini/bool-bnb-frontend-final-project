@@ -55,28 +55,35 @@ footer {
     margin-top: 60px;
     min-height: 200px;
     padding-top: 50px;
-    // background-color: #d6e9f0;
     background-color: #eaecf0;
 
 
     ul {
         min-height: 120px;
         border-radius: 20px;
-        background-color: #52a3c0;
+        // background-color: #52a3c0;
         a {
-            color: black;
-            font-size: 1.2rem;
-            color: white;
+            color: #98A2B3;
+            font-size: .8rem;
             text-decoration: none;
             &:hover {
-                text-decoration: underline;
-                color: rgba(17, 24, 126, 0.858);
+                color: white;
             }
 
             i {
                 font-size: 2rem;
             
             }
+        }
+    }
+
+    .social-icons {
+        a {
+            font-size: .8rem;
+            color: #98A2B3;
+        }
+        a:hover {
+            color: white;
         }
     }
 
