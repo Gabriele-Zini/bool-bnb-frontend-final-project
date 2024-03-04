@@ -72,6 +72,7 @@ h4 {
     border: none;
     border-radius: 5px;
     padding: 10px;
+    outline: none !important;
 }
 .my-btn-search {
     margin-left: 10px;
@@ -80,7 +81,6 @@ h4 {
     background-color: white;
     color: #0dcaf0;
     transition: background-color .6s ease-in-out;
-    outline: none;
 }
 .my-btn-search:hover {
     color: white;
