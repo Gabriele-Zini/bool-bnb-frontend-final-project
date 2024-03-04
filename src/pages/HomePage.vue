@@ -16,6 +16,7 @@ export default {
   },
 
   created() {
+    this.store.headerTransparent = true;
     this.fetchData();
     this.handleScroll();
   },
@@ -27,7 +28,7 @@ export default {
   methods: {
     fetchData() {
       axios.get(`${this.store.baseUrl}/api/apartments?page=${this.currentPage}`).then((resp) => {
-        console.log(resp.data);
+        console.log(resp);
         this.apartments = resp.data.result.data;
         this.totalPages = resp.data.result.last_page;
       });
@@ -70,7 +71,26 @@ export default {
     startSearch() {
       this.$router.push({ path: '/search', query: { location: this.location } });
       window.scrollTo(0, 600);
-    }
+    },
+
+    getIconClassForService(serviceId) {
+      switch (serviceId) {
+        case 1:
+          return 'fa-solid fa-wifi';
+        case 2:
+          return 'fa-solid fa-square-parking';
+        case 3:
+          return 'fa-solid fa-person-swimming';
+        case 4:
+          return 'fa-solid fa-bell-concierge';
+        case 5:
+          return 'fa-solid fa-spa';
+        case 6:
+          return 'fa-solid fa-water';
+        default:
+          return '';
+      }
+    },
   },
 };
 </script>
@@ -83,12 +103,12 @@ export default {
 
   <!-- video -->
   <div class="w-100">
-        <div class="ms_video-container">
-            <video autoplay loop muted id="myVideo" src="../assets/video/homepage.mp4" class="w-100 ms_404-video"></video>
-            <h2 class="fs-1">BoolBnB</h2>
-            <p class="ms_caption fs-3">Your Home Away From Home</p>
-        </div>
+    <div class="ms_video-container">
+      <video autoplay loop muted id="myVideo" src="../assets/video/homepage.mp4" class="w-100 ms_404-video"></video>
+      <h2 class="fs-1">BoolBnB</h2>
+      <p class="ms_caption fs-3">Your Home Away From Home</p>
     </div>
+  </div>
 
 
 
@@ -97,57 +117,62 @@ export default {
     <div class="row justify-content-center my-5">
       <div class="col-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 g-5 p-3" v-for="apartment in apartments"
         :key="apartment.id">
-        <div class="card position-relative border border-info ms_shadow-sponsored" style="height: 30rem">
-          <i class="fa-regular fa-gem ms_icon-sponsored"></i>
-          <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt="" class="card-img-top" />
-          <div class="card-body ms_card">
-            <h5 class="card-title mt-2 fs-6">
-              {{ truncateString(apartment.title, 15) }}
-            </h5>
-            <p class="m-0 p-0">
-              {{ apartment.street_name }} {{ apartment.street_number }}
-            </p>
-            <p class="mb-3 p-0">{{ apartment.city }}</p>
-            <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary"
-              target="_blank">Details</router-link>
+        <router-link class="ms_card" :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" target="_blank">
+          <div class="position-relative">
+            <i class="fa-regular fa-gem ms_icon-sponsored"></i>
+            <img :src="`${store.baseUrl}/storage/image_path/${apartment.image_path}`" alt=""
+              class="card-img-top mb-2" />
+            <div class="card-body">
+              <h5 class="card-title mt-2 fs-6">
+                {{ truncateString(apartment.title, 25) }}
+              </h5>
+              <p class="m-0 p-0 mt-2">
+                {{ apartment.street_name }} {{ apartment.street_number }}
+              </p>
+              <p class="mb-3 p-0">{{ apartment.city }}</p>
+            </div>
+
+            <div class="d-inline p-1 ms_services" v-for="service in apartment.services" :key="service.id">
+              <i :class="getIconClassForService(service.name)"></i>
+            </div>
+
           </div>
-        </div>
-      </div>
-
-    </div>
-    <nav aria-label="Page navigation" class="my-4 container">
-
-      <div class="text-center d-flex justify-content-center">
-        <ul class="pagination d-flex">
-          <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
-            <a class="page-link flex-grow-1" href="#" aria-label="Previous"
-              @click.prevent="changePage(currentPage - 1)">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
-            <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
-          </li>
-          <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
-            <a class="page-link flex-grow-1" href="#" aria-label="Next" @click.prevent="changePage(currentPage + 1)">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-    </nav>
-
-    <div class="row justify-content-center">
-      <div class="col-4 box-search">
-        <div class="d-flex justify-content-center">
-          <input class="ms_searchbox" type="text" placeholder="Find your destination" v-model="location">
-          <button class="my-btn-search" @click="startSearch" :disabled="location == ''">Search</button>
-        </div>
+        </router-link>
       </div>
     </div>
-
   </div>
+
+  <nav aria-label="Page navigation" class="my-4 container">
+
+    <div class="text-center d-flex justify-content-center">
+      <ul class="pagination d-flex">
+        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+          <a class="page-link flex-grow-1" href="#" aria-label="Previous" @click.prevent="changePage(currentPage - 1)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
+          <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+          <a class="page-link flex-grow-1" href="#" aria-label="Next" @click.prevent="changePage(currentPage + 1)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-4 box-search">
+      <div class="d-flex justify-content-center">
+        <input class="ms_searchbox" type="text" placeholder="Find your destination" v-model="location">
+        <button class="my-btn-search" @click="startSearch" :disabled="location == ''">Search</button>
+      </div>
+    </div>
+  </div>
+
 
   <AppModal :slug="slug" />
 </template>
@@ -159,27 +184,27 @@ export default {
 
 
 .ms_video-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
 
-    .ms_404-video {
-        filter: brightness(0.60);
-    }
+  .ms_404-video {
+    filter: brightness(0.60);
+  }
 
-    h2 {
-        position: absolute;
-        bottom: 105px;
-        color: #f2f4f7;
-        filter: drop-shadow(10px 10px 10px black);
-        // font-size: 2rem;
-    }
+  h2 {
+    position: absolute;
+    bottom: 105px;
+    color: #f2f4f7;
+    filter: drop-shadow(10px 10px 10px black);
+    // font-size: 2rem;
+  }
 
-    .ms_caption {
-        position: absolute;
-        bottom: 35px;
-        color: #f2f4f7;
-        filter: drop-shadow(10px 10px 10px black);
-    }
+  .ms_caption {
+    position: absolute;
+    bottom: 35px;
+    color: #f2f4f7;
+    filter: drop-shadow(10px 10px 10px black);
+  }
 }
 </style>

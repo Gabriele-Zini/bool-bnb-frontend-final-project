@@ -36,33 +36,37 @@ export default {
     AppModal,
   },
 
+  created() {
+    this.store.headerTransparent = false;
+  },
+
   mounted() {
     this.fetchServices();
     this.mapInit();
     if (this.$route.query.location) {
-      this.locationReceived(); 
+      this.locationReceived();
     }
   },
-  
+
   methods: {
     locationReceived() {
       console.log(this.$route.query.location);
       let base_url = `https://api.tomtom.com/search/2/geocode/${this.$route.query.location}.json?storeResult=false&view=Unified&key=HAMFczyVGd30ClZCfYGP9To9Y18u6eq7`
-      
+
 
       axios.get(base_url)
-      .then((resp) => {
-        console.log(resp.data.results[0].position);
-        this.latitude = resp.data.results[0].position.lat;
-        this.longitude = resp.data.results[0].position.lon;
+        .then((resp) => {
+          console.log(resp.data.results[0].position);
+          this.latitude = resp.data.results[0].position.lat;
+          this.longitude = resp.data.results[0].position.lon;
 
-        this.fetchData();
-      })
+          this.fetchData();
+        })
     },
+
     message(slug) {
       this.slug = slug;
     },
-
 
     mapInit() {
       const successCallback = (position) => {
@@ -302,24 +306,26 @@ export default {
     getImage(imgPath) {
       return new URL(`../assets/img/${imgPath}`, import.meta.url).href;
     },
+
+
     getIconClassForService(serviceName) {
-    switch (serviceName) {
-      case 'WiFi':
-        return 'fa-solid fa-wifi';
-      case 'Car Parking':
-        return 'fa-solid fa-square-parking';  
-      case 'Pool':
-        return 'fa-solid fa-person-swimming';  
-      case 'Reception':
-        return 'fa-solid fa-bell-concierge';  
-      case 'Sauna':
-        return 'fa-solid fa-spa'; 
-      case 'Sea View':
-        return 'fa-solid fa-water';       
-      default:
-        return 'fa-solid fa-question'; 
-    }
-  },
+      switch (serviceName) {
+        case 'WiFi':
+          return 'fa-solid fa-wifi';
+        case 'Parking':
+          return 'fa-solid fa-square-parking';
+        case 'Pool':
+          return 'fa-solid fa-person-swimming';
+        case 'Reception':
+          return 'fa-solid fa-bell-concierge';
+        case 'Sauna':
+          return 'fa-solid fa-spa';
+        case 'Sea View':
+          return 'fa-solid fa-water';
+        default:
+          return '';
+      }
+    },
 
 
     truncateString(stringa, lunghezzaMassima) {
@@ -334,7 +340,7 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid">
+  <div class="container ms_margin">
     <div class="row justify-content-center flex-column">
 
       <!-- form to request data -->
@@ -377,29 +383,30 @@ export default {
 
               <!-- num bed -->
               <div class="mb-3">
-                <label for="num_beds" class="form-label">Beds Number:</label>
+                <label for="num_beds" class="form-label">Beds:</label>
                 <input type="number" class="form-control" id="num_beds" name="num_beds" v-model="num_beds" />
               </div>
 
               <!-- num room -->
               <div class="mb-3">
-                <label for="num_rooms" class="form-label">Rooms Number:</label>
+                <label for="num_rooms" class="form-label">Rooms:</label>
                 <input type="number" class="form-control" id="num_rooms" name="num_rooms" v-model="num_rooms" />
               </div>
 
               <!-- num bathrooms -->
               <div class="mb-3">
-                <label for="num_bathrooms" class="form-label">bathrooms Number:</label>
+                <label for="num_bathrooms" class="form-label">baths:</label>
                 <input type="number" class="form-control" id="num_bathrooms" name="num_bathrooms"
                   v-model="num_bathrooms" />
               </div>
 
-              <div class="btn-sm my-3" role="group" aria-label="Basic checkbox toggle button group">
+              <!-- services -->
+              <div class="mb-3" role="group" aria-label="Basic checkbox toggle button group">
                 <div class="row g-2">
-                  <div class="" v-for="service in services">
+                  <div class="col-4 col-lg-6" v-for="service in services">
                     <input type="checkbox" class="btn-check" :id="service.id" :name="service.name" value="1"
                       autocomplete="off" @change="updateSelectedServices(service.name)" />
-                    <label class="btn btn-outline-dark" :for="service.id">
+                    <label class="btn btn-outline-dark w-100" :for="service.id">
                       {{ service.name }}
                     </label>
                   </div>
@@ -427,49 +434,46 @@ export default {
         <!-- requested data returns -->
         <div class="mt-5" v-if="!results && params !== 1">
           <h4>No apartments found</h4>
-        </div>
+      </div>
       </div>
 
       <!-- apartment--card -->
-      <div class="col-12 col-md-10 col-lg-8 g-5 mx-auto p-0" v-if="params !== 1">
+      <div class="col-10 p-0 mx-auto" v-if="params !== 1">
 
         <div class="row justify-content-center flex-column flex-sm-row">
 
-          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 g-5 mx-auto" v-for="apartment in filteredApartments"
+          <div class="col-12 col-sm-6 col-lg-5 col-xl-4 col-xxl-3 g-5 mx-auto" v-for="apartment in filteredApartments"
             :key="apartment.id">
 
-            <div class="ms_card position-relative "
-              :class="apartment.sponsor ? 'border border-info ms_shadow-sponsored' : ''" style="height: 30rem">
-              <i v-if="apartment.sponsor" class="fa-regular fa-gem ms_icon-sponsored"></i>
-              <div v-for="image in apartment.images">
-                <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
-                  alt="" class="card-img-top" />
-              </div>
-
-              <div class="card-body ms_card">
-                <h5 class="card-title mt-2 fs-6">
-                  {{ truncateString(apartment.title, 15) }}
-                </h5>
-                <p class="m-0 p-0 txt-card">
-                  {{ apartment.street_name }} {{ apartment.street_number }}
-                </p>
-                <p class="mb-3 p-0 txt-card">{{ apartment.city }}</p>
-
-                <div class="d-inline p-1" v-for="service in apartment.services" :key="service.id">
-                  <i :class="getIconClassForService(service.name)"></i>
+            <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }"
+              class="ms_card d-flex justify-content-center" target="_blank">
+              <div class="position-relative">
+                <i v-if="apartment.sponsor" class="fa-regular fa-gem ms_icon-sponsored"></i>
+                <div v-for="image in apartment.images">
+                  <img v-if="image.cover_image === 1" :src="`${store.baseUrl}/storage/image_path/${image.image_path}`"
+                    alt="" class="card-img-top" />
                 </div>
 
+                <div class="card-body ms_card">
+                  <h5 class="card-title mt-2 fs-6">
+                    {{ truncateString(apartment.title, 25) }}
+                  </h5>
+                  <p class="m-0 mt-2 p-0 txt-card">
+                    {{ apartment.street_name }} {{ apartment.street_number }}
+                  </p>
+                  <p class="mb-3 p-0 txt-card">{{ apartment.city }}</p>
 
+                  <div class="d-inline p-1 ms_services" v-for="service in apartment.services" :key="service.id">
+                    <i :class="getIconClassForService(service.name)"></i>
+                  </div>
 
-                
-                <router-link :to="{ name: 'apartmentInfo', params: { slug: apartment.slug } }" class="my_btn_primary d-flex justify-content-center"
-                  target="_blank">Details</router-link>
+                </div>
               </div>
-            </div>
+            </router-link>
 
           </div>
 
-        </div>
+      </div>
       </div>
 
     </div>
@@ -478,11 +482,12 @@ export default {
 
   <AppModal :slug="slug" />
 </template>
+
 <style lang="scss" scoped>
 @use "../style/partials/mixin" as *;
 
-.container-fluid {
-  padding-top: 100px;
+.ms_margin {
+  margin-top: 6rem;
 }
 
 .my_column {

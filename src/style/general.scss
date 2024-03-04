@@ -20,27 +20,41 @@ h4 {
     @include p_color;
 }
 
-img {
-    width: 100%;
-    // max-width: 150px;
-    // min-width: 80px;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
 .ms_icon-sponsored {
     position: absolute;
     font-size: 1.5rem;
     top: 7px;
     right: 7px;
-    color: #0dcaf0;
-    filter: drop-shadow(2px 3px 2px #0dcaf0);
+    color: $light-blue;
+    // filter: drop-shadow(2px 3px 2px #0dcaf0);
 }
 
 .ms_card {
     padding: 0.1rem;
     font-size: .9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: scale 1s;
+    color: inherit;
+
+    img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .ms_services {
+        color: $light-blue;
+    }
+
+    .card-title {
+        color: black;
+    }
+    
+    &:hover {
+        // scale: 1.1;
+    }
 }
 
 .ms_shadow {
@@ -66,6 +80,7 @@ img {
     background-color: white;
     color: #0dcaf0;
     transition: background-color .6s ease-in-out;
+    outline: none;
 }
 .my-btn-search:hover {
     color: white;
